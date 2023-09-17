@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
        
-      class userNameField extends StatelessWidget {
+      class text_field extends StatelessWidget {
         final controler;
         final String hintText;
         final IconData ic;
-        const userNameField({
+        const text_field({
           super.key, this.controler, required this.hintText, required this.ic
 
         });
@@ -15,21 +15,31 @@ import 'package:flutter/material.dart';
               padding: const EdgeInsets.symmetric(horizontal:25.0 ),
           child: TextField(
           controller:controler,
+            autocorrect: false,
+            enableSuggestions: false,
+            autofocus: false,
           decoration:InputDecoration(
-          prefixIcon: Icon(ic),
 
-          enabledBorder:  OutlineInputBorder(
-          borderSide: BorderSide(color:Colors.white),
-          ),
-          focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color:Colors.grey.shade400),
-          ),
-          fillColor: Colors.grey.shade200,
-          alignLabelWithHint: false,
+            prefixIcon: Icon(ic,color: Colors.grey.shade500),
+            enabledBorder:  OutlineInputBorder(
+              borderSide: BorderSide(  color: Colors.grey.withOpacity(0.4), width: 0.5),
 
-          filled: true,
-          hintText:hintText,
-          hintStyle: TextStyle(color: Colors.grey[500]),
+              borderRadius: BorderRadius.circular(30),
+
+            ),
+
+            focusedBorder: OutlineInputBorder(
+              borderSide: BorderSide(  color: Colors.grey.withOpacity(0.4), width: 0.5),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            fillColor: Colors.indigo.withOpacity(0.1),
+            alignLabelWithHint: false,
+
+
+
+            filled: true,
+            hintText:hintText,
+            hintStyle:TextStyle(fontSize: 18, color: Colors.grey.shade500, fontStyle: FontStyle.normal),
           ),
           ),
           );

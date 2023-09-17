@@ -1,3 +1,4 @@
+import 'package:Login/welcome.dart';
 import 'package:flutter/material.dart';
 import 'login_page.dart';
 import 'sign up.dart';
@@ -19,11 +20,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return  MaterialApp(
 debugShowCheckedModeBanner: false,
-      home:loginPage(),
-      initialRoute:  "login",
+      home:welcome(),
+      initialRoute:  "welcome",
       routes:
       {
-        "login":(BuildContext context) => loginPage(),
+        "welcome":(BuildContext context) => welcome(),
+        "login":(context) => loginPage(),
         "signup":(context) => signUp(),
       },
 

@@ -3,6 +3,7 @@ import 'package:Login/component/square_title.dart';
 import 'package:flutter/material.dart';
 import 'package:Login/component/usernameTextField.dart';
 import 'component/text_field.dart';
+import 'package:Login/welcome.dart';
 class loginPage extends StatefulWidget {
    const loginPage({super.key});
 
@@ -18,45 +19,51 @@ void LogInUser(){}
 
 @override
   Widget  build(BuildContext context) {
-  double sizeW= MediaQuery.of(context).size.width;
-  double sizeH = MediaQuery.of(context).size.height;
+ // double sizeW= MediaQuery.of(context).size.width; if I wanted streched dimensions
+ // double sizeH = MediaQuery.of(context).size.height;if I wanted streched dimensions
     return Scaffold(
 
-        backgroundColor: Colors.white,
-
-      body: SafeArea(
-        child:Center(
+        body: Container(
+          decoration: BoxDecoration(
+           color: Colors.indigo,
+              /* an image for background
+              alignment: Alignment.topCenter,
+              fit: BoxFit.fill,
+              image:AssetImage("assets/photo_2023-09-08_18-59-27.jpg"
+            ),
+            ),*/
+          ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
+
           children: [
-          // logo
-        const   SizedBox(height:50),
-            const Image(
-            height:180,
-              width: 180,
-               image:AssetImage("assets/Untitled333-removebg-preview.png"
-              ),
-          ),
-          SizedBox(height:15),
+  Container(
+  height: 700,
+  width: double.infinity,
+  decoration: BoxDecoration(
+  color: Colors.white,
+  borderRadius: BorderRadius.only(topLeft: Radius.circular(15), topRight: Radius.circular(25)),
+  ),
+  child: Padding(
+  padding: const EdgeInsets.all(15.0),
+  child: Column(
+  mainAxisAlignment: MainAxisAlignment.spaceAround,
+  crossAxisAlignment: CrossAxisAlignment.stretch,
 
-          //welcome back!, you've been missed.
-          Text("welcome back!, you've been missed.",
-            style: TextStyle
-              (
-                color: Colors.grey[700]
-                , fontSize: 20),
-          ),
-          SizedBox(height:25),
+  children: [
+    SizedBox(height: 40),
 
-          userNameField(
+
+
+    text_field(
               controler: username,
           hintText: "username",
             ic: Icons.person,
 
           ),
-          SizedBox(height:10),
+         // SizedBox(height:10),
 
-          myTextField(
+    password_field(
           controler: password,
             hintText: "password",
             obsecure: true,
@@ -64,18 +71,18 @@ void LogInUser(){}
 
           ),
           //forgot password?
-          SizedBox(height:10),
+         // SizedBox(height:20),
 
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25.0),
             child: Row(
 
-              mainAxisAlignment:MainAxisAlignment.end,
+              mainAxisAlignment:MainAxisAlignment.center,
               children: [
 
                 Text("forgot password?",
                 style: TextStyle(
-                  color: Colors.grey[600],fontSize: 15,
+                  color: Colors.indigo[600],fontSize: 15,fontWeight: FontWeight.w400,
                 ),
                 ),
 
@@ -83,46 +90,13 @@ void LogInUser(){}
             ),
           ),
 
-          SizedBox(height:25),
+       //   SizedBox(height:10),
           //sign in button
 
           button(onTab: LogInUser,text: "Log In",),
 
-          const SizedBox(height:50),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25.0),
-            child: Row(children: [
-              Expanded(child:Divider(
-                thickness: 0.5,
-                color: Colors.grey[400],
-              ),),
+        //  const SizedBox(height:10),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Text("or continue with",
-                style:TextStyle(color: Colors.grey[700],),
-              ),
-              ),
-              Expanded(
-                  child:Divider(
-                thickness: 0.5,
-                color: Colors.grey[400],
-              )
-              )
-
-
-            ],),
-          ),
-            SizedBox(height: 30,),
-         /* Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-          square_title(imagePath: "assets/google-logo-9808.png"),
-          const  SizedBox(width: 10,),
-          square_title(imagePath: "assets/png-apple-logo-9711.png")
-          ],),
-          SizedBox(height: 30,),
-*/
           Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -133,14 +107,17 @@ void LogInUser(){}
                 Navigator.of(context).pushNamed("signup");
 
               },
-              child:Text("Register now", style: TextStyle(color:Colors.blue,fontWeight: FontWeight.bold), ),),
+              child:Text("Register now", style: TextStyle(color:Colors.indigo,fontWeight: FontWeight.w500), ),),
 
           ],
         )
         ],
         ),
-      )
-      )
+      ),
+          ),
+        ]),
+
+  ),
     );
   }
 }

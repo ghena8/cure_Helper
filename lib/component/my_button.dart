@@ -6,23 +6,20 @@ class button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTap:onTab ,
       child:Container(
+        height: 50,
      padding:const EdgeInsets.all(25.0),
      margin: const EdgeInsets.symmetric(horizontal: 25),
-      decoration: BoxDecoration(color: Colors.black,
-      borderRadius: BorderRadius.circular(8),
+      decoration: BoxDecoration( color: Colors.indigo.shade800,
+
+      borderRadius: BorderRadius.circular(30),
     ),
       child:  Center(
           // Navigate to the second screen using a named route.
-
-      child: Text(text,
-      style: TextStyle(color: Colors.white,
-        fontWeight: FontWeight.bold,
-        fontSize: 16,
-      ),
-      ),
+        child: Text(text, style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700, color: Colors.white,),),
 
         ),
 
