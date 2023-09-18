@@ -1,7 +1,7 @@
-import 'package:Login/welcome.dart';
 import 'package:flutter/material.dart';
-import 'login_page.dart';
-import 'sign up.dart';
+import 'screens/login_page.dart';
+import 'screens/welcome.dart';
+import 'screens/sign_up.dart';
 
 void main() {
   runApp(const MyApp());

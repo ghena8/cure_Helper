@@ -1,7 +1,9 @@
-import 'package:Login/component/start_button.dart';
+import 'package:CureHelper/component/start_button.dart';
+import 'package:CureHelper/screens/login_page.dart';
 import 'package:flutter/material.dart';
 
 class welcome extends StatelessWidget {
+  static const String routename = '/welcome';
   const welcome({super.key});
 
   @override
@@ -51,7 +53,7 @@ class welcome extends StatelessWidget {
                 children: [
                   start_button(
                     onTab: () {
-                      Navigator.of(context).pushNamed("login");
+                      Navigator.of(context).pushNamed(loginPage.routename);
                     },
                     text: "Get started",
                   ),
