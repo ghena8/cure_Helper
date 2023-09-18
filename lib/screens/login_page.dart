@@ -1,10 +1,12 @@
-import 'package:Login/component/cure_button.dart';
-import 'package:Login/component/usernameTextField.dart';
+import 'package:CureHelper/component/cure_button.dart';
+import 'package:CureHelper/component/text_field.dart';
+import 'package:CureHelper/component/usernameTextField.dart';
+import 'package:CureHelper/screens/sign_up.dart';
 import 'package:flutter/material.dart';
 
-import 'component/text_field.dart';
-
 class loginPage extends StatefulWidget {
+  static const String routename = 'login';
+
   const loginPage({super.key});
 
   @override
@@ -81,7 +83,7 @@ class _loginPageState extends State<loginPage> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.of(context).pushNamed("signup");
+                          Navigator.of(context).pushNamed(signUp.routename);
                         },
                         child: const Text(
                           "Register now",

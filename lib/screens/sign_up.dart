@@ -1,10 +1,12 @@
-import 'package:Login/component/cure_button.dart';
-import 'package:Login/component/my_button.dart';
+import 'package:CureHelper/component/cure_button.dart';
+import 'package:CureHelper/component/text_field.dart';
+import 'package:CureHelper/component/usernameTextField.dart';
+import 'package:CureHelper/screens/login_page.dart';
 import 'package:flutter/material.dart';
-import 'package:Login/component/usernameTextField.dart';
-import 'component/text_field.dart';
 
 class signUp extends StatefulWidget {
+  static const String routename = 'signup';
+
   const signUp({super.key});
 
   @override
@@ -81,16 +83,11 @@ class _signUpState extends State<signUp> {
                     ),
                   ),
 
-                  //   SizedBox(height:10),
-                  //sign in button
-
                   CureButton(
                     onTab: signUpUser,
                     text: "sign up",
                     variants: "dark",
                   ),
-
-                  //  const SizedBox(height:10),
 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -101,7 +98,7 @@ class _signUpState extends State<signUp> {
                       ),
                       InkWell(
                         onTap: () {
-                          Navigator.of(context).pushNamed("login");
+                          Navigator.of(context).pushNamed(loginPage.routename);
                         },
                         child: const Text(
                           "Log in here",
