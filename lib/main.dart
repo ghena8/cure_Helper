@@ -1,3 +1,4 @@
+import 'package:CureHelper/screens/forgotPassword.dart';
 import 'package:flutter/material.dart';
 import 'screens/login_page.dart';
 import 'screens/welcome.dart';
@@ -25,6 +26,8 @@ class _MyAppState extends State<MyApp> {
         "welcome": (BuildContext context) => const welcome(),
         "login": (context) => const loginPage(),
         "signup": (context) => const signUp(),
+        "send email": (context) => const fogotPassword(),
+
       },
     );
   }

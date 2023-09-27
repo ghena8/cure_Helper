@@ -1,7 +1,7 @@
 import 'package:CureHelper/component/cure_button.dart';
-import 'package:CureHelper/component/text_field.dart';
-import 'package:CureHelper/component/usernameTextField.dart';
+import 'package:CureHelper/component/cure_text_field.dart';
 import 'package:CureHelper/screens/sign_up.dart';
+import 'package:CureHelper/screens/forgotPassword.dart';
 import 'package:flutter/material.dart';
 
 class loginPage extends StatefulWidget {
@@ -45,12 +45,13 @@ class _loginPageState extends State<loginPage> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 40),
-                  text_field(
+                  cure_text_field(
+                    obsecure: false,
                     controler: username,
                     hintText: "username",
                     ic: Icons.person,
                   ),
-                  password_field(
+                  cure_text_field(
                     controler: password,
                     hintText: "password",
                     obsecure: true,
@@ -59,7 +60,11 @@ class _loginPageState extends State<loginPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
+                      InkWell(
+                      onTap: () {
+                        Navigator.of(context).pushNamed(fogotPassword.routename);
+                      },
+                        child:  Text(
                         "forgot password?",
                         style: TextStyle(
                           color: Colors.indigo[600],
@@ -67,6 +72,7 @@ class _loginPageState extends State<loginPage> {
                           fontWeight: FontWeight.w400,
                         ),
                       ),
+                    ),
                     ],
                   ),
                   CureButton(

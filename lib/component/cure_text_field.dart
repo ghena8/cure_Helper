@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-class password_field extends StatefulWidget {
+class cure_text_field extends StatefulWidget {
   final controler;
   final String hintText;
   final bool obsecure;
  final IconData ic;
 
-  password_field({super.key,
+  cure_text_field({super.key,
   required this.controler,
     required this.hintText,
     required this.obsecure,
@@ -14,12 +14,19 @@ class password_field extends StatefulWidget {
   });
 
   @override
-  State<password_field> createState() => _myTextFieldState();
+  State<cure_text_field> createState() => _myTextFieldState();
 
 }
 
-class _myTextFieldState extends State<password_field> {
+class _myTextFieldState extends State<cure_text_field> {
   bool passwordVisible=false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    passwordVisible= !widget.obsecure;
+  }
 
   @override
   void _toogleevisibility(){
@@ -34,21 +41,13 @@ class _myTextFieldState extends State<password_field> {
   padding: const EdgeInsets.symmetric(horizontal:25.0 ),
   child: TextField(
     controller: widget.controler,
-    obscureText: !passwordVisible,
+    obscureText:
+    !passwordVisible,
     autocorrect: false,
     enableSuggestions: false,
     autofocus: false,
 
     decoration:InputDecoration(
-      suffixIcon: IconButton(
-        icon: Icon(passwordVisible
-            ? Icons.visibility
-            : Icons.visibility_off,
-        color:Colors.grey.shade500 ,),
-        onPressed: () {
-                  _toogleevisibility();
-            },
-          ),
 
 
 
@@ -73,10 +72,23 @@ class _myTextFieldState extends State<password_field> {
       filled: true,
       hintText:widget.hintText,
       hintStyle:TextStyle(fontSize: 18, color: Colors.grey.shade500, fontStyle: FontStyle.normal),
-  ),
+      suffixIcon:
+      widget.obsecure ?
+      IconButton(
+        icon: Icon(passwordVisible
+            ? Icons.visibility
+            : Icons.visibility_off,
+            color:Colors.grey.shade500 ),
+        onPressed: () {
+          _toogleevisibility();
+        },
+      ): null,
+    ),
     keyboardType: TextInputType.visiblePassword,
     textInputAction: TextInputAction.done,
-  ),
+    ),
+
+
     );
 }
 }

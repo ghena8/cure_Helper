@@ -1,6 +1,5 @@
 import 'package:CureHelper/component/cure_button.dart';
-import 'package:CureHelper/component/text_field.dart';
-import 'package:CureHelper/component/usernameTextField.dart';
+import 'package:CureHelper/component/cure_text_field.dart';
 import 'package:CureHelper/screens/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -36,7 +35,10 @@ class _signUpState extends State<signUp> {
             decoration: const BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15), topRight: Radius.circular(25)),
+                  topLeft: Radius.circular(15), topRight: Radius.circular(25)
+              ),
+
+
             ),
             child: Padding(
               padding: const EdgeInsets.all(15.0),
@@ -46,14 +48,15 @@ class _signUpState extends State<signUp> {
                 children: [
                   const SizedBox(height: 40),
 
-                  text_field(
+                  cure_text_field(
+                    obsecure: false,
+
                     controler: username,
                     hintText: "username",
                     ic: Icons.person,
                   ),
-                  // SizedBox(height:10),
 
-                  password_field(
+                  cure_text_field(
                     controler: password,
                     hintText: "password",
                     obsecure: true,
@@ -61,7 +64,9 @@ class _signUpState extends State<signUp> {
                   ),
 
                   // an email field
-                  text_field(
+                  cure_text_field(
+                    obsecure: false,
+
                     controler: email,
                     hintText: "email",
                     ic: Icons.email,
@@ -76,8 +81,7 @@ class _signUpState extends State<signUp> {
                           style: TextStyle(
                             color: Colors.indigo[600],
                             fontSize: 15,
-                            fontWeight: FontWeight.w400,
-                          ),
+                              fontWeight: FontWeight.w500,                          ),
                         ),
                       ],
                     ),
