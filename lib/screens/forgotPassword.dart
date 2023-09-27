@@ -36,7 +36,7 @@ class _fogotPasswordState extends State<fogotPassword> {
                     textAlign: TextAlign.left ,
                     style: TextStyle(
                         color: Colors.white,
-                        fontSize:20,
+                        fontSize:21,
                         fontWeight: FontWeight.w500
                     ),
                   ),
