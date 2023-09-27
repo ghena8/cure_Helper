@@ -71,21 +71,7 @@ class _signUpState extends State<signUp> {
                     hintText: "email",
                     ic: Icons.email,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "forgot password?",
-                          style: TextStyle(
-                            color: Colors.indigo[600],
-                            fontSize: 15,
-                              fontWeight: FontWeight.w500,                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+
 
                   CureButton(
                     onTab: signUpUser,
