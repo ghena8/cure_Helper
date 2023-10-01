@@ -32,7 +32,7 @@ class _loginPageState extends State<loginPage> {
         child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
           Container(
             height: MediaQuery.of(context).size.height *
-                0.7, // 70% of screen height
+                0.75, // 75% of screen height
             width: double.infinity,
             decoration: const BoxDecoration(
               color: Colors.white,

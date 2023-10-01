@@ -1,3 +1,4 @@
+import 'package:CureHelper/screens/add_page.dart';
 import 'package:CureHelper/screens/forgotPassword.dart';
 import 'package:CureHelper/screens/home.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,8 @@ class _MyAppState extends State<MyApp> {
         "signup": (context) => const signUp(),
         "send email": (context) => const fogotPassword(),
         "home" :(context) => const homePage(),
+        "add medicine " :(context) => const AddMedicinePage(),
+        
 
       },
     );
