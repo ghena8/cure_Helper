@@ -1,5 +1,6 @@
 import 'package:CureHelper/component/cure_button.dart';
 import 'package:CureHelper/component/cure_text_field.dart';
+import 'package:CureHelper/screens/home.dart';
 import 'package:CureHelper/screens/sign_up.dart';
 import 'package:CureHelper/screens/forgotPassword.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class _loginPageState extends State<loginPage> {
   final username = TextEditingController();
 
   final password = TextEditingController();
-  void LogInUser() {}
+  
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +32,7 @@ class _loginPageState extends State<loginPage> {
         child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
           Container(
             height: MediaQuery.of(context).size.height *
-                0.7, // 70% of screen height
+                0.75, // 75% of screen height
             width: double.infinity,
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -76,7 +77,9 @@ class _loginPageState extends State<loginPage> {
                     ],
                   ),
                   CureButton(
-                    onTab: LogInUser,
+                    onTab: () {
+                        Navigator.of(context).pushNamed(homePage.routename); // go to home page
+                      },
                     text: "Log In",
                     variants: "dark",
                   ),
