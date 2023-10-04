@@ -1,4 +1,4 @@
-import 'package:CureHelper/screens/add_page.dart';
+import 'package:CureHelper/screens/addPage.dart';
 import 'package:CureHelper/screens/forgotPassword.dart';
 import 'package:CureHelper/screens/home.dart';
 import 'package:flutter/material.dart';
