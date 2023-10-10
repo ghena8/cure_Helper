@@ -12,12 +12,13 @@ class button extends StatelessWidget {
       child: Container(
         height: 50,
         // padding: const EdgeInsets.all(25.0), // this padding is causing the problem
-        margin: const EdgeInsets.symmetric(horizontal: 25),
+        //margin: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-          color: Colors.indigo.shade800,
-          borderRadius: BorderRadius.circular(30),
+          color: Colors.indigo,
+          borderRadius: BorderRadius.circular(28),
         ),
         child: Center(
+          widthFactor: 1.5, // speace to the text 
           // Navigate to the second screen using a named route.
           child: Text(
             text,
