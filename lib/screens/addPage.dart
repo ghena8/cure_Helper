@@ -4,6 +4,9 @@ import 'package:CureHelper/screens/home.dart';
 import 'package:CureHelper/component/input_field.dart';
 import 'package:intl/intl.dart';
 import 'package:CureHelper/component/my_button.dart';
+import 'package:get/get.dart';
+import '../controllers/taskM_controller.dart';
+import '../models/medicineTask.dart';
 
 class AddMedicinePage extends StatefulWidget {
   static const String routename = 'add medicine ';
@@ -14,6 +17,7 @@ class AddMedicinePage extends StatefulWidget {
 }
 
 class _AddMedicinePageState extends State<AddMedicinePage> {
+  final TaskMController _taskMController = Get.put(TaskMController());
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
   final TextEditingController _amoutController = TextEditingController();
@@ -315,7 +319,8 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                                     _priceController.text.isNotEmpty &&
                                     _amoutController.text.isNotEmpty &&
                                     _doseController.text.isNotEmpty) {
-                                  // add to database 'method '
+                                  _addTaskMToDb(); // add to database 'method '
+
                                   Navigator.of(context).pushNamed(
                                       homePage.routename); // go to home page
                                 } else {
@@ -335,6 +340,26 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
         ),
       ),
     );
+  }
+
+  _addTaskMToDb()async {
+   int value = await _taskMController.addTaskM(
+      task: medicineTask(
+        medicineName: _titleController.text,
+        price: _priceController.text,
+        isCompleted: 0,
+        amountOfMedication: _amoutController.text,
+        packagesNumber: _selectedPackages,
+        medicationDose: _doseController.text,
+        startDate: DateFormat.yMd().format(_selectedDate),
+        time: _startTime,
+        condition: _selectedCondition,
+        color: _selectedColor,
+        remind: _selectedRemind,
+        repeat: _selectedRepeat,
+      ),
+    );
+    print("My id is "+"$value ");
   }
 
   final sanacbar = SnackBar(
