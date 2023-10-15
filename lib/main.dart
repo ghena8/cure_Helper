@@ -1,3 +1,4 @@
+import 'package:CureHelper/db/db_helper.dart';
 import 'package:CureHelper/screens/addPage.dart';
 import 'package:CureHelper/screens/forgotPassword.dart';
 import 'package:CureHelper/screens/home.dart';
@@ -6,7 +7,8 @@ import 'screens/login_page.dart';
 import 'screens/welcome.dart';
 import 'screens/sign_up.dart';
 
-void main() {
+void main() async{
+  await DBHelper.initDb();
   runApp(const MyApp());
 }
 
