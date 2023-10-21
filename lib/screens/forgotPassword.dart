@@ -29,23 +29,25 @@ class _fogotPasswordState extends State<fogotPassword> {
 
         ),
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween, // was .end
             children: [
               // title page "Forgot Password? " with padding 
-              const Padding( 
-                padding:  EdgeInsets.symmetric(vertical: 80),
-                child:  Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children:  [
-                     Text("Forgot Password? ",
-                      textAlign: TextAlign.left ,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize:25,
-                          fontWeight: FontWeight.w700
+             const SafeArea(
+                child:  Padding( 
+                  padding:  EdgeInsets.symmetric(vertical: 8.5, horizontal: 9), // vertical: 80),
+                  child:  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch, // .start
+                    children:  [
+                       Text("Forgot Password? ",
+                        textAlign: TextAlign.left ,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize:25,
+                            fontWeight: FontWeight.w700
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
       

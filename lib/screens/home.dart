@@ -1,5 +1,5 @@
 import 'package:CureHelper/component/navigationBar.dart';
-import 'package:CureHelper/screens/add_page.dart';
+import 'package:CureHelper/screens/addPage.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -30,6 +30,28 @@ class _homePageState extends State<homePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
+            const SafeArea( 
+               child:  Padding( 
+                  padding:  EdgeInsets.symmetric(vertical: 8.5, horizontal: 9 ),
+                  child:  Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children:  [  
+                       Row(
+                         children: [
+                          //  const Text("",  // title to the page
+                          //     textAlign: TextAlign.left ,
+                          //     style: TextStyle(
+                          //         color: Colors.white,
+                          //         fontSize:22,
+                          //         fontWeight: FontWeight.w700
+                          //     ),
+                          //   ),
+                         ],
+                       ),
+                      ],
+                    ),
+                  ),
+              ),
             Container(
               height: MediaQuery.of(context).size.height *
                   0.75, // 70% of screen height
@@ -40,10 +62,12 @@ class _homePageState extends State<homePage> {
                     topLeft: Radius.circular(15),
                     topRight: Radius.circular(25)),
               ),
+              
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 // start from here BODY
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     _addMedicineBar(), // First row (day, date, and add button)
                     _addDateBar(),  // Second row (date_timeline)
@@ -57,7 +81,7 @@ class _homePageState extends State<homePage> {
       ),
     );
   }
-  _addMedicineBar(){
+_addMedicineBar(){
   return
     Container(
     margin:
