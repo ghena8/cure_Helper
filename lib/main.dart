@@ -1,12 +1,18 @@
+//import 'package:CureHelper/db/db_helper.dart';
 import 'package:CureHelper/screens/addPage.dart';
 import 'package:CureHelper/screens/forgotPassword.dart';
+import 'package:CureHelper/screens/historyPage.dart';
 import 'package:CureHelper/screens/home.dart';
+import 'package:CureHelper/screens/searchPage.dart';
+import 'package:CureHelper/screens/morePage.dart';
 import 'package:flutter/material.dart';
 import 'screens/login_page.dart';
 import 'screens/welcome.dart';
 import 'screens/sign_up.dart';
 
-void main() {
+void main() async{
+  // WidgetsFlutterBinding.ensureInitialized();
+  // await DBHelper.initDb();
   runApp(const MyApp());
 }
 
@@ -31,7 +37,9 @@ class _MyAppState extends State<MyApp> {
         "send email": (context) => const fogotPassword(),
         "home" :(context) => const homePage(),
         "add medicine " :(context) => const AddMedicinePage(),
-        
+        "more" :(context) => const morePage(),
+        "search" :(context) => const searchPage(),
+        "history" :(context) => const HistoryPage(),
 
       },
     );

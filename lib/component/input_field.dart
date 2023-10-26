@@ -29,7 +29,7 @@ class MyInputField extends StatelessWidget {
                 color: Colors.black, fontSize: 18, fontWeight: FontWeight.w700),
           ),
           Container(
-            height: 50,
+            height: 48,
             margin: const EdgeInsets.only(top:6.0),
             padding: const EdgeInsets.only(left: 10),
             decoration: BoxDecoration(
@@ -41,6 +41,7 @@ class MyInputField extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextFormField(
+                    readOnly: widget==null?false:true, //If it was a widget, he wouldn't be able to write
                     autofocus: false,
                     cursorColor: Colors.grey[700],
                     controller: controller,
@@ -70,6 +71,7 @@ class MyInputField extends StatelessWidget {
                     ),
                   ),
                 ),
+                widget==null?Container():Container(child: widget,),
               ],
             ),
           ),
