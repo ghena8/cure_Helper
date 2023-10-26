@@ -1,4 +1,3 @@
-import 'package:CureHelper/component/cure_button.dart';
 import 'package:flutter/material.dart';
 import 'package:CureHelper/screens/home.dart';
 import 'package:CureHelper/component/input_field.dart';

@@ -18,25 +18,18 @@ class DBHelper {
         onCreate: (db, version) {
           print("creating a new one ");
           return db.execute(
-            // Create a table
-            "CREATE TABLE $_tableName("
-            " id INTEGER PRIMARY KEY AUTOINCREMENT,"
-            "medicineName STRING, price STRING, "
-            "amountOfMedication STRING, packagesNumber INTEGER, "
-            "medicationDose STRING, startDate STRING, time STRING, "
-            "condition STRING, color INTEGER, remind INTEGER,"
-            " repeat STRING, "
-            "isCompleted INTEGER )",
-          );
+              // Create a table
+              "CREATE TABLE $_tableName(id INTEGER PRIMARY KEY, medicineName TEXT, price TEXT, isCompleted INTEGER, amountOfMedication TEXT, packagesNumber INTEGER, medicationDose TEXT, startDate TEXT, time TEXT, condition TEXT, color INTEGER, remind INTEGER, repeat TEXT,  )  ");
         },
       );
     } catch (e) {
       print(e);
     }
   }
-  static Future<int> insert (medicineTask? task) async{
+
+  static Future<int> insert(medicineTask? task) async {
     print("insert function called");
-    return await _db?.insert(_tableName, task!.toJson())??1;
+    return await _db?.insert(_tableName, task!.toJson()) ?? 1;
   }
 
 }
