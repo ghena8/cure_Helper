@@ -24,9 +24,10 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
   DateTime _selectedDate = DateTime.now();
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
   int _selectedAmountBox = 1;
-    List<int> amountBoxList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40];
+  int _selectedDuration = 1;
+  List<int> amountBoxList = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,50,60,70,80,90];
   int _selectedPackages = 1;
-    int _selectedDose= 1;
+  int _selectedDose = 1;
   List<int> packagesList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   String _selectedCondition = "None";
   List<String> conditionList = [
@@ -49,8 +50,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
     return Scaffold(
       appBar: _appBar(),
       body: Padding(
-        padding:
-            const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
         // start from here BODY
         child: SingleChildScrollView(
           // can move the page.
@@ -65,28 +65,73 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                   fontWeight: FontWeight.w700,
                 ),
               ),
+              //Medicine name<and in Row> //Price
+              Row(
+                children: [
+                  Expanded(
+                    child: MyInputField(
+                      title: "Medicine name: ",
+                      hint: "Enter medicine name ",
+                      controller: _titleController,
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: MyInputField(
+                      title: "Price: ",
+                      hint: "Enter price of medicine",
+                      controller: _priceController,
+                    ),
+                  ),
+                ],
               //Medicine name
-              MyInputField(
-                title: "Medicine name: ",
-                hint: "Enter your medicine name ",
-                controller: _titleController,
+                // MyInputField(
+                //   title: "Medicine name: ",
+                //   hint: "Enter your medicine name ",
+                //   controller: _titleController,
+                // ),
+                // //Price
+                // MyInputField(
+                //   title: "Price: ",
+                //   hint: "Enter the price of the medicine",
+                //   controller: _priceController,
+                // ),
               ),
-              //Price
-              MyInputField(
-                title: "Price: ",
-                hint: "Enter the price of the medicine",
-                controller: _priceController,
+              //Duration
+               MyInputField(
+                title:  "How many days will take medicine: ",
+                hint: "$_selectedDuration",
+                widget: DropdownButton(
+                  items:
+                      amountBoxList.map<DropdownMenuItem<String>>((int value) {
+                    return DropdownMenuItem<String>(
+                        value: value.toString(), child: Text(value.toString()));
+                  }).toList(),
+                  onChanged: (String? newVlaue) {
+                    setState(() {
+                      _selectedAmountBox = int.parse(newVlaue!);
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: Colors.grey,
+                  ),
+                  iconSize: 30,
+                  elevation: 4,
+                  underline: Container(
+                    height: 0,
+                  ),
+                ),
               ),
               //Amount of medication
               MyInputField(
                 title: "How many pills are in the package?",
                 hint: "$_selectedAmountBox",
                 widget: DropdownButton(
-                  items: amountBoxList
-                      .map<DropdownMenuItem<String>>((int value) {
+                  items:
+                      amountBoxList.map<DropdownMenuItem<String>>((int value) {
                     return DropdownMenuItem<String>(
-                        value: value.toString(),
-                        child: Text(value.toString()));
+                        value: value.toString(), child: Text(value.toString()));
                   }).toList(),
                   onChanged: (String? newVlaue) {
                     setState(() {
@@ -269,8 +314,8 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                       title: "Repeat: ",
                       hint: "$_selectedRepeat ",
                       widget: DropdownButton(
-                        items: repeatList.map<DropdownMenuItem<String>>(
-                            (String? value) {
+                        items: repeatList
+                            .map<DropdownMenuItem<String>>((String? value) {
                           return DropdownMenuItem<String>(
                             value: value,
                             child: Text(
@@ -308,15 +353,13 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                   button(
                       onTab: () {
                         if (_titleController.text.isNotEmpty &&
-                            _priceController.text.isNotEmpty 
-                            ) {
+                            _priceController.text.isNotEmpty) {
                           _addTaskMToDb(); // add to database 'method '
 
-                          Navigator.of(context).pushNamed(
-                              homePage.routename); // go to home page
+                          Navigator.of(context)
+                              .pushNamed(homePage.routename); // go to home page
                         } else {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(sanacbar);
+                          ScaffoldMessenger.of(context).showSnackBar(sanacbar);
                         }
                       },
                       text: "Create alarm")
@@ -337,7 +380,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
         isCompleted: 0,
         amountOfMedication: _selectedAmountBox,
         packagesNumber: _selectedPackages,
-        medicationDose:_selectedDose,
+        medicationDose: _selectedDose,
         startDate: DateFormat.yMd().format(_selectedDate),
         time: _startTime,
         condition: _selectedCondition,
@@ -476,8 +519,8 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
     return AppBar(
       backgroundColor: const Color.fromRGBO(63, 81, 181, 1),
       // leading: const //Make things just the beginning
-        title:const  Text(
-          "Add your medication information",
+      title: const Text(
+        "Add your medication information",
         style: TextStyle(
           fontSize: 20,
           fontWeight: FontWeight.w500,
