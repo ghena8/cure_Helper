@@ -4,9 +4,9 @@ class medicineTask {
   String? medicineName;
   String? price;
   int? isCompleted; // if it is finished
-  String? amountOfMedication;
+  int? amountOfMedication;
   int? packagesNumber;
-  String? medicationDose;
+  int? medicationDose;
   String? startDate;
   String? time;
   String? condition;

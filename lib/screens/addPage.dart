@@ -19,13 +19,14 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
   final TaskMController _taskMController = Get.put(TaskMController());
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
-  final TextEditingController _amoutController = TextEditingController();
-  final TextEditingController _doseController = TextEditingController();
 
   //Entry fields
   DateTime _selectedDate = DateTime.now();
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
+  int _selectedAmountBox = 1;
+    List<int> amountBoxList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40];
   int _selectedPackages = 1;
+    int _selectedDose= 1;
   List<int> packagesList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   String _selectedCondition = "None";
   List<String> conditionList = [
@@ -46,310 +47,297 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: _appBar(),
-      body: Container(
-        decoration: const BoxDecoration(
-          color: Color.fromRGBO(63, 81, 181, 1),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // title page + back icon
-            SafeArea(
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 8.5, horizontal: 9),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Row(
-                      children: [
-                        IconButton(
-                          iconSize: 28,
-                          color: Colors.white,
-                          icon: const Icon(Icons.arrow_back_ios),
-                          onPressed: () {
-                            Navigator.of(context).pushNamed(
-                                homePage.routename); // go  back to home page
-                          },
-                        ),
-                        const Text(
-                          "Add your medication information",
-                          textAlign: TextAlign.left,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 22,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ],
-                    ),
-                  ],
+      appBar: _appBar(),
+      body: Padding(
+        padding:
+            const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+        // start from here BODY
+        child: SingleChildScrollView(
+          // can move the page.
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const Text(
+                "Add Medicine ",
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.w700,
                 ),
               ),
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height *
-                  0.85, // 70% of screen height
-              width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(25)),
+              //Medicine name
+              MyInputField(
+                title: "Medicine name: ",
+                hint: "Enter your medicine name ",
+                controller: _titleController,
               ),
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
-                // start from here BODY
-                child: SingleChildScrollView(
-                  // can move the page.
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      const Text(
-                        "Add Medicine ",
-                        style: TextStyle(
-                          fontSize: 26,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      //Medicine name
-                      MyInputField(
-                        title: "Medicine name: ",
-                        hint: "Enter your medicine name ",
-                        controller: _titleController,
-                      ),
-                      //Price
-                      MyInputField(
-                        title: "Price: ",
-                        hint: "Enter the price of the medicine",
-                        controller: _priceController,
-                      ),
-                      //Amount of medication
-                      MyInputField(
-                        title: "Amount of medication: ",
-                        hint: "How many pills are in the package?",
-                        controller: _amoutController,
-                      ),
-                      //Number of box meicine <and in Row> //Dose
-                      Row(
-                        children: [
-                          Expanded(
-                            child: MyInputField(
-                              title: "Packages Number: ",
-                              hint: "$_selectedPackages",
-                              widget: DropdownButton(
-                                items: packagesList
-                                    .map<DropdownMenuItem<String>>((int value) {
-                                  return DropdownMenuItem<String>(
-                                      value: value.toString(),
-                                      child: Text(value.toString()));
-                                }).toList(),
-                                onChanged: (String? newVlaue) {
-                                  setState(() {
-                                    _selectedPackages = int.parse(newVlaue!);
-                                  });
-                                },
-                                icon: const Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  color: Colors.grey,
-                                ),
-                                iconSize: 30,
-                                elevation: 4,
-                                underline: Container(
-                                  height: 0,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: MyInputField(
-                              title: "Medication dose: ",
-                              hint: "How many doses",
-                              controller: _doseController,
-                            ),
-                          ),
-                        ],
-                      ),
-                      //Start date <and in Row> //Time
-                      Row(
-                        children: [
-                          Expanded(
-                            child: MyInputField(
-                              title: "Start date: ",
-                              hint: DateFormat.yMd().format(_selectedDate),
-                              widget: IconButton(
-                                icon: const Icon(
-                                  Icons.calendar_today_outlined,
-                                  color: Colors.grey,
-                                ),
-                                onPressed: () {
-                                  _getDateFormUser();
-                                },
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: MyInputField(
-                              title: "Time",
-                              hint: _startTime,
-                              widget: IconButton(
-                                  onPressed: () {
-                                    _getTimeFromUser(isStartTime: true);
-                                  },
-                                  icon: const Icon(
-                                    Icons.alarm,
-                                    color: Colors.grey,
-                                  )),
-                            ),
-                          ),
-                        ],
-                      ),
-                      //Condition
-                      MyInputField(
-                        title: "Condition: ",
-                        hint: "$_selectedCondition ",
-                        widget: DropdownButton(
-                          items: conditionList
-                              .map<DropdownMenuItem<String>>((String? value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Text(
-                                value!,
-                                style: TextStyle(color: Colors.grey[600]),
-                              ),
-                            );
-                          }).toList(),
-                          onChanged: (String? newVlaue) {
-                            setState(() {
-                              _selectedCondition = newVlaue!;
-                            });
-                          },
-                          icon: const Icon(
-                            Icons.keyboard_arrow_down_rounded,
-                            color: Colors.grey,
-                          ),
-                          iconSize: 30,
-                          elevation: 4,
-                          underline: Container(
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                      //Remind <and in Row> //Repeat
-                      Row(
-                        children: [
-                          Expanded(
-                            child: MyInputField(
-                              title: "Remind: ",
-                              hint: "$_selectedRemind minutes early",
-                              widget: DropdownButton(
-                                items: remindList
-                                    .map<DropdownMenuItem<String>>((int value) {
-                                  return DropdownMenuItem<String>(
-                                      value: value.toString(),
-                                      child: Text(value.toString()));
-                                }).toList(),
-                                onChanged: (String? newVlaue) {
-                                  setState(() {
-                                    _selectedRemind = int.parse(newVlaue!);
-                                  });
-                                },
-                                icon: const Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  color: Colors.grey,
-                                ),
-                                iconSize: 30,
-                                elevation: 4,
-                                underline: Container(
-                                  height: 0,
-                                ),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: MyInputField(
-                              title: "Repeat: ",
-                              hint: "$_selectedRepeat ",
-                              widget: DropdownButton(
-                                items: repeatList.map<DropdownMenuItem<String>>(
-                                    (String? value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(
-                                      value!,
-                                      style: TextStyle(color: Colors.grey[600]),
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newVlaue) {
-                                  setState(() {
-                                    _selectedRepeat = newVlaue!;
-                                  });
-                                },
-                                icon: const Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  color: Colors.grey,
-                                ),
-                                iconSize: 30,
-                                elevation: 4,
-                                underline: Container(
-                                  height: 0,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      // Save button and change colors
-                      const SizedBox(height: 18),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          _colorPallete(),
-                          button(
-                              onTab: () {
-                                if (_titleController.text.isNotEmpty &&
-                                    _priceController.text.isNotEmpty &&
-                                    _amoutController.text.isNotEmpty &&
-                                    _doseController.text.isNotEmpty) {
-                                  _addTaskMToDb(); // add to database 'method '
-
-                                  Navigator.of(context).pushNamed(
-                                      homePage.routename); // go to home page
-                                } else {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(sanacbar);
-                                }
-                              },
-                              text: "Create alarm")
-                        ],
-                      )
-                    ],
+              //Price
+              MyInputField(
+                title: "Price: ",
+                hint: "Enter the price of the medicine",
+                controller: _priceController,
+              ),
+              //Amount of medication
+              MyInputField(
+                title: "How many pills are in the package?",
+                hint: "$_selectedAmountBox",
+                widget: DropdownButton(
+                  items: amountBoxList
+                      .map<DropdownMenuItem<String>>((int value) {
+                    return DropdownMenuItem<String>(
+                        value: value.toString(),
+                        child: Text(value.toString()));
+                  }).toList(),
+                  onChanged: (String? newVlaue) {
+                    setState(() {
+                      _selectedAmountBox = int.parse(newVlaue!);
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: Colors.grey,
+                  ),
+                  iconSize: 30,
+                  elevation: 4,
+                  underline: Container(
+                    height: 0,
                   ),
                 ),
               ),
-            ),
-          ],
+              // //Number of box meicine <and in Row> //Dose
+              Row(
+                children: [
+                  Expanded(
+                    child: MyInputField(
+                      title: "Packages Number: ",
+                      hint: "$_selectedPackages",
+                      widget: DropdownButton(
+                        items: packagesList
+                            .map<DropdownMenuItem<String>>((int value) {
+                          return DropdownMenuItem<String>(
+                              value: value.toString(),
+                              child: Text(value.toString()));
+                        }).toList(),
+                        onChanged: (String? newVlaue) {
+                          setState(() {
+                            _selectedPackages = int.parse(newVlaue!);
+                          });
+                        },
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: Colors.grey,
+                        ),
+                        iconSize: 30,
+                        elevation: 4,
+                        underline: Container(
+                          height: 0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: MyInputField(
+                      title: "How many doses ? ",
+                      hint: "$_selectedPackages",
+                      widget: DropdownButton(
+                        items: packagesList
+                            .map<DropdownMenuItem<String>>((int value) {
+                          return DropdownMenuItem<String>(
+                              value: value.toString(),
+                              child: Text(value.toString()));
+                        }).toList(),
+                        onChanged: (String? newVlaue) {
+                          setState(() {
+                            _selectedDose = int.parse(newVlaue!);
+                          });
+                        },
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: Colors.grey,
+                        ),
+                        iconSize: 30,
+                        elevation: 4,
+                        underline: Container(
+                          height: 0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              //Start date <and in Row> //Time
+              Row(
+                children: [
+                  Expanded(
+                    child: MyInputField(
+                      title: "Start date: ",
+                      hint: DateFormat.yMd().format(_selectedDate),
+                      widget: IconButton(
+                        icon: const Icon(
+                          Icons.calendar_today_outlined,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          _getDateFormUser();
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: MyInputField(
+                      title: "Time",
+                      hint: _startTime,
+                      widget: IconButton(
+                          onPressed: () {
+                            _getTimeFromUser(isStartTime: true);
+                          },
+                          icon: const Icon(
+                            Icons.alarm,
+                            color: Colors.grey,
+                          )),
+                    ),
+                  ),
+                ],
+              ),
+              //Condition
+              MyInputField(
+                title: "Condition: ",
+                hint: "$_selectedCondition ",
+                widget: DropdownButton(
+                  items: conditionList
+                      .map<DropdownMenuItem<String>>((String? value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(
+                        value!,
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? newVlaue) {
+                    setState(() {
+                      _selectedCondition = newVlaue!;
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.keyboard_arrow_down_rounded,
+                    color: Colors.grey,
+                  ),
+                  iconSize: 30,
+                  elevation: 4,
+                  underline: Container(
+                    height: 0,
+                  ),
+                ),
+              ),
+              //Remind <and in Row> //Repeat
+              Row(
+                children: [
+                  Expanded(
+                    child: MyInputField(
+                      title: "Remind: ",
+                      hint: "$_selectedRemind minutes early",
+                      widget: DropdownButton(
+                        items: remindList
+                            .map<DropdownMenuItem<String>>((int value) {
+                          return DropdownMenuItem<String>(
+                              value: value.toString(),
+                              child: Text(value.toString()));
+                        }).toList(),
+                        onChanged: (String? newVlaue) {
+                          setState(() {
+                            _selectedRemind = int.parse(newVlaue!);
+                          });
+                        },
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: Colors.grey,
+                        ),
+                        iconSize: 30,
+                        elevation: 4,
+                        underline: Container(
+                          height: 0,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: MyInputField(
+                      title: "Repeat: ",
+                      hint: "$_selectedRepeat ",
+                      widget: DropdownButton(
+                        items: repeatList.map<DropdownMenuItem<String>>(
+                            (String? value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value!,
+                              style: TextStyle(color: Colors.grey[600]),
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newVlaue) {
+                          setState(() {
+                            _selectedRepeat = newVlaue!;
+                          });
+                        },
+                        icon: const Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          color: Colors.grey,
+                        ),
+                        iconSize: 30,
+                        elevation: 4,
+                        underline: Container(
+                          height: 0,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // Save button and change colors
+              const SizedBox(height: 18),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _colorPallete(),
+                  button(
+                      onTab: () {
+                        if (_titleController.text.isNotEmpty &&
+                            _priceController.text.isNotEmpty 
+                            ) {
+                          _addTaskMToDb(); // add to database 'method '
+
+                          Navigator.of(context).pushNamed(
+                              homePage.routename); // go to home page
+                        } else {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(sanacbar);
+                        }
+                      },
+                      text: "Create alarm")
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
-  _addTaskMToDb()async {
-   int value = await _taskMController.addTaskM(
+  _addTaskMToDb() async {
+    int value = await _taskMController.addTaskM(
       task: medicineTask(
         medicineName: _titleController.text,
         price: _priceController.text,
         isCompleted: 0,
-        amountOfMedication: _amoutController.text,
+        amountOfMedication: _selectedAmountBox,
         packagesNumber: _selectedPackages,
-        medicationDose: _doseController.text,
+        medicationDose:_selectedDose,
         startDate: DateFormat.yMd().format(_selectedDate),
         time: _startTime,
         condition: _selectedCondition,
@@ -358,7 +346,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
         repeat: _selectedRepeat,
       ),
     );
-    print("My id is "+"$value ");
+    print("My id is " + "$value ");
   }
 
   final sanacbar = SnackBar(
@@ -483,4 +471,75 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
       ),
     );
   }
+
+  _appBar() {
+    return AppBar(
+      backgroundColor: const Color.fromRGBO(63, 81, 181, 1),
+      // leading: const //Make things just the beginning
+        title:const  Text(
+          "Add your medication information",
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.w500,
+          fontStyle: FontStyle.normal,
+        ),
+      ),
+    );
+  }
 }
+//  Scaffold(
+//       //appBar: _appBar(),
+//       body: Container(
+//         decoration: const BoxDecoration(
+//           color: Color.fromRGBO(63, 81, 181, 1),
+//         ),
+//         child: Column(
+//           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//           children: [
+//             // title page + back icon
+//             SafeArea(
+//               child: Padding(
+//                 padding:
+//                     const EdgeInsets.symmetric(vertical: 8.5, horizontal: 9),
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.stretch,
+//                   children: [
+//                     Row(
+//                       children: [
+//                         IconButton(
+//                           iconSize: 28,
+//                           color: Colors.white,
+//                           icon: const Icon(Icons.arrow_back_ios),
+//                           onPressed: () {
+//                             Navigator.of(context).pushNamed(
+//                                 homePage.routename); // go  back to home page
+//                           },
+//                         ),
+//                         const Text(
+//                           "Add your medication information",
+//                           textAlign: TextAlign.left,
+//                           style: TextStyle(
+//                               color: Colors.white,
+//                               fontSize: 22,
+//                               fontWeight: FontWeight.w700),
+//                         ),
+//                       ],
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//             Container(
+//               height: MediaQuery.of(context).size.height *
+//                   0.85, // 70% of screen height
+//               width: double.infinity,
+//               decoration: const BoxDecoration(
+//                 color: Colors.white,
+//                 borderRadius: BorderRadius.only(
+//                     topLeft: Radius.circular(15),
+//                     topRight: Radius.circular(25)),
+//               ),
+//               child: Padding(
+//                 padding:
+//                     const EdgeInsets.symmetric(horizontal: 20.0, vertical: 20),
+//                 // start from here BODY
