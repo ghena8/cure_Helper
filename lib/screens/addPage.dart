@@ -100,7 +100,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
               //Duration
                MyInputField(
                 title:  "How many days will take medicine: ",
-                hint: "$_selectedDuration",
+                hint: "$_selectedDuration days",
                 widget: DropdownButton(
                   items:
                       amountBoxList.map<DropdownMenuItem<String>>((int value) {
@@ -109,7 +109,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                   }).toList(),
                   onChanged: (String? newVlaue) {
                     setState(() {
-                      _selectedAmountBox = int.parse(newVlaue!);
+                      _selectedDuration = int.parse(newVlaue!);
                     });
                   },
                   icon: const Icon(
@@ -126,7 +126,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
               //Amount of medication
               MyInputField(
                 title: "How many pills are in the package?",
-                hint: "$_selectedAmountBox",
+                hint: "$_selectedAmountBox pills",
                 widget: DropdownButton(
                   items:
                       amountBoxList.map<DropdownMenuItem<String>>((int value) {
@@ -155,7 +155,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                   Expanded(
                     child: MyInputField(
                       title: "Packages Number: ",
-                      hint: "$_selectedPackages",
+                      hint: "$_selectedPackages box",
                       widget: DropdownButton(
                         items: packagesList
                             .map<DropdownMenuItem<String>>((int value) {
@@ -184,7 +184,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                   Expanded(
                     child: MyInputField(
                       title: "How many doses ? ",
-                      hint: "$_selectedPackages",
+                      hint: "$_selectedDose pills",
                       widget: DropdownButton(
                         items: packagesList
                             .map<DropdownMenuItem<String>>((int value) {
