@@ -39,6 +39,8 @@ dependencies:
   date_picker_timeline: ^1.2.5
   sqflite: ^2.3.0
   get: ^4.6.5
+  firebase_core: ^2.22.0
+  firebase_auth: ^4.14.0
   
 
 dev_dependencies:
