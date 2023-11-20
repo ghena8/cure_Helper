@@ -26,34 +26,57 @@ class _fogotPasswordState extends State<fogotPassword> {
       body: Container(
         decoration:  BoxDecoration(
           color: Theme.of(context).colorScheme.primary,
-
         ),
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, // was .end
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // title page "Forgot Password? " with padding 
-             const SafeArea(
-                child:  Padding( 
-                  padding:  EdgeInsets.symmetric(vertical: 8.5, horizontal: 9), // vertical: 80),
-                  child:  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch, // .start
-                    children:  [
-                       Text("Forgot Password? ",
-                        textAlign: TextAlign.left ,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize:25,
-                            fontWeight: FontWeight.w700
+              SafeArea(
+                child: Padding(
+                  padding:
+                  const EdgeInsets.symmetric(vertical: 8.5, horizontal: 9),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 25, horizontal: 30),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Icon(
+                                Icons.arrow_back,
+                                size: 40,
+                                color: Colors.grey[300],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Text(
+                              " Reset Password",
+                              style: TextStyle(
+                                fontSize: 30,
+                                fontWeight: FontWeight.w700,
+                                color: Colors.grey[300],
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
               ),
-      
               Container(
         height: MediaQuery.of(context).size.height *
-            0.75, // 75% of screen height
+            0.80, // 80% of screen height
         width: double.infinity,
 
             alignment: Alignment.center,
