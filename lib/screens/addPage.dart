@@ -517,7 +517,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
 
   _appBar() {
     return AppBar(
-      backgroundColor: const Color.fromRGBO(63, 81, 181, 1),
+      backgroundColor: Theme.of(context).colorScheme.primary,
       // leading: const //Make things just the beginning
       title: const Text(
         "Add your medication information",

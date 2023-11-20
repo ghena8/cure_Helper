@@ -64,8 +64,9 @@ class _myTextFieldState extends State<cure_text_field> {
     borderSide: BorderSide(  color: Colors.grey.withOpacity(0.4), width: 0.5),
     borderRadius: BorderRadius.circular(30),
   ),
-  fillColor: Colors.indigo.withOpacity(0.1),
-      alignLabelWithHint: false,
+  fillColor: Theme.of(context).colorScheme.secondary,
+
+    alignLabelWithHint: false,
 
 
 

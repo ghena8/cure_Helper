@@ -24,8 +24,8 @@ class _fogotPasswordState extends State<fogotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Colors.indigo,
+        decoration:  BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
 
         ),
         child: Column(
@@ -58,14 +58,14 @@ class _fogotPasswordState extends State<fogotPassword> {
 
             alignment: Alignment.center,
 
-            decoration: const BoxDecoration(
-              color: Colors.white,
+            decoration:  BoxDecoration(
+              color: Theme.of(context).colorScheme.background,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15), topRight: Radius.circular(25)),
             ),
             child: Padding(
 
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
+              padding:  EdgeInsets.symmetric(horizontal: 25.0),
 
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -73,11 +73,11 @@ class _fogotPasswordState extends State<fogotPassword> {
                 children: [
 
 
-                     const SizedBox(child:
+                      SizedBox(child:
                       Text("Enter your registed email and we will send you a password reset link ",
-                       textAlign: TextAlign.center ,
+                       textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.indigo,
+                      color: Theme.of(context).colorScheme.onBackground,
                         fontSize:20,
                         fontWeight: FontWeight.w500
                       ),
@@ -98,7 +98,7 @@ class _fogotPasswordState extends State<fogotPassword> {
                   CureButton(
                     onTab: send,
                     text: "Send",
-                    variants: "dark",
+                 //   variants: "dark",
                   ),
 
                 ],

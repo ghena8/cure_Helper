@@ -24,16 +24,16 @@ class _signUpState extends State<signUp> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          color: Colors.indigo,
+        decoration:  BoxDecoration(
+          color:Theme.of(context).colorScheme.primary,
         ),
         child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
           Container(
             height: MediaQuery.of(context).size.height *
                 0.7, // 70% of screen height
             width: double.infinity,
-            decoration: const BoxDecoration(
-              color: Colors.white,
+            decoration:  BoxDecoration(
+              color: Theme.of(context).colorScheme.background,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15), topRight: Radius.circular(25)
               ),
@@ -76,7 +76,7 @@ class _signUpState extends State<signUp> {
                   CureButton(
                     onTab: signUpUser,
                     text: "sign up",
-                    variants: "dark",
+                   // variants: "dark",
                   ),
 
                   Row(
@@ -90,10 +90,10 @@ class _signUpState extends State<signUp> {
                         onTap: () {
                           Navigator.of(context).pushNamed(loginPage.routename);
                         },
-                        child: const Text(
+                        child:  Text(
                           "Log in here",
                           style: TextStyle(
-                              color: Colors.indigo,
+                              color: Theme.of(context).colorScheme.onBackground,
                               fontWeight: FontWeight.w500),
                         ),
                       ),
