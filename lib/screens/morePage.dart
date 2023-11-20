@@ -46,7 +46,7 @@ class _morePageState extends State<morePage> {
                         children: [
                           Icon(
                             Icons.settings,
-                            size: 55,
+                            size: 40,
                             color: Colors.grey[300],
                           ),
                           const SizedBox(
