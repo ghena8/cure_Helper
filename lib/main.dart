@@ -6,7 +6,9 @@ import 'package:CureHelper/screens/historyPage.dart';
 import 'package:CureHelper/screens/home.dart';
 import 'package:CureHelper/screens/searchPage.dart';
 import 'package:CureHelper/screens/morePage.dart';
+import 'package:CureHelper/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'screens/login_page.dart';
 import 'screens/welcome.dart';
 import 'screens/sign_up.dart';
@@ -19,7 +21,12 @@ Future <void> main() async{
     options: DefaultFirebaseOptions.currentPlatform,
    );
   // await DBHelper.initDb();
-  runApp(const MyApp());
+
+  runApp(
+ChangeNotifierProvider(create: (context) => ThemeProvider(),
+child: const MyApp(),
+  ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -33,8 +40,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+
       debugShowCheckedModeBanner: false,
       home: const welcome(),
+      theme: Provider.of<ThemeProvider>(context).themeData,
       initialRoute: "welcome",
       routes: {
         "welcome": (BuildContext context) => const welcome(),

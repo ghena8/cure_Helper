@@ -14,7 +14,7 @@ class button extends StatelessWidget {
         // padding: const EdgeInsets.all(25.0), // this padding is causing the problem
         //margin: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
-          color: Colors.indigo,
+          color:  Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(28),
         ),
         child: Center(

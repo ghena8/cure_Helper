@@ -25,17 +25,18 @@ class _loginPageState extends State<loginPage> {
     // double sizeW= MediaQuery.of(context).size.width; if I wanted streched dimensions
     // double sizeH = MediaQuery.of(context).size.height;if I wanted streched dimensions
     return Scaffold(
+
       body: Container(
-        decoration: const BoxDecoration(
-          color: Colors.indigo,
+        decoration:  BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
         ),
         child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
           Container(
             height: MediaQuery.of(context).size.height *
                 0.75, // 75% of screen height
             width: double.infinity,
-            decoration: const BoxDecoration(
-              color: Colors.white,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.background,
               borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(15), topRight: Radius.circular(25)),
             ),
@@ -68,7 +69,7 @@ class _loginPageState extends State<loginPage> {
                         child:  Text(
                         "forgot password?",
                         style: TextStyle(
-                          color: Colors.indigo[600],
+                          color: Theme.of(context).colorScheme.onBackground,
                           fontSize: 15,
                           fontWeight: FontWeight.w400,
                         ),
@@ -81,7 +82,7 @@ class _loginPageState extends State<loginPage> {
                         Navigator.of(context).pushNamed(homePage.routename); // go to home page
                       },
                     text: "Log In",
-                    variants: "dark",
+                   // variants: "dark",
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -94,10 +95,10 @@ class _loginPageState extends State<loginPage> {
                         onTap: () {
                           Navigator.of(context).pushNamed(signUp.routename);
                         },
-                        child: const Text(
+                        child:  Text(
                           "Register now",
                           style: TextStyle(
-                              color: Colors.indigo,
+                              color:Theme.of(context).colorScheme.onBackground,
                               fontWeight: FontWeight.w500),
                         ),
                       ),

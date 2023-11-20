@@ -30,7 +30,7 @@ class CureButton extends StatelessWidget {
         height: 50,
         margin: const EdgeInsets.symmetric(horizontal: 25),
         decoration: BoxDecoration(
-          color: colors[variants]!["background"],
+          color:Theme.of(context).colorScheme.primary,
           borderRadius: BorderRadius.circular(30),
         ),
         child: Center(
@@ -40,7 +40,7 @@ class CureButton extends StatelessWidget {
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.w700,
-              color: colors[variants]!["text"],
+              color: Colors.white,
             ),
           ),
         ),
