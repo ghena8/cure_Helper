@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:CureHelper/screens/home.dart';
 import 'package:provider/provider.dart';
-
+import 'package:CureHelper/screens/welcome.dart';
 import '../component/cure_button.dart';
 
 class morePage extends StatefulWidget {
@@ -126,22 +126,25 @@ class _morePageState extends State<morePage> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 25, bottom: 25),
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.logout_rounded,
-                            color: Colors.grey[400],
-                            size: 40,
-                          ),
-                          title: const Text(
-                            " L O G O U T ",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed(welcome.routename);
+                            // go to welcome screen
+                          },
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.logout_rounded,
+                              color: Colors.grey[400],
+                              size: 40,
+                            ),
+                            title: const Text(
+                              " L O G O U T ",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
-                          onTap: () {
-                            // go to profile screen
-                          },
                         ),
                       ),
                       //log out
