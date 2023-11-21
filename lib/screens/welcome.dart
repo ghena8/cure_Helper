@@ -3,7 +3,7 @@ import 'package:CureHelper/screens/login_page.dart';
 import 'package:flutter/material.dart';
 
 class welcome extends StatelessWidget {
-  static const String routename = '/welcome';
+  static const String routename = 'welcome';
   const welcome({super.key});
 
   @override

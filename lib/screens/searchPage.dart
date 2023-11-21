@@ -21,8 +21,8 @@ class _searchPageState extends State<searchPage> {
       bottomNavigationBar:  myNavigationBar(),
       //appBar: _appBar(),
       body: Container(
-        decoration: const BoxDecoration(
-          color: Color.fromRGBO(63, 81, 181, 1),
+        decoration:  BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
@@ -53,8 +53,8 @@ class _searchPageState extends State<searchPage> {
               height: MediaQuery.of(context).size.height *
                   0.75, // 70% of screen height
               width: double.infinity,
-              decoration: const BoxDecoration(
-                 color: Colors.white,
+              decoration:  BoxDecoration(
+                 color:  Theme.of(context).colorScheme.background,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15),
                     topRight: Radius.circular(25)),
@@ -80,14 +80,14 @@ class _searchPageState extends State<searchPage> {
     }
 
    return Container(
-      color: Colors.white,
+      color:  Theme.of(context).colorScheme.background,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
         child: GNav(
-          backgroundColor: Colors.white,
-          color: Colors.black, // of text
-          activeColor: Colors.black,
-          tabBackgroundColor: const Color.fromRGBO(63, 81, 181, 0.76),
+          backgroundColor:  Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.onBackground, // of text
+          activeColor:  Theme.of(context).colorScheme.onBackground,
+          tabBackgroundColor:  Theme.of(context).colorScheme.primary,
           gap: 8, //Space between the icon and the name
           padding: const EdgeInsets.all(16),
           onTabChange: _navigateBottomBar, // Change under pressure

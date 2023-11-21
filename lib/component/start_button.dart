@@ -14,7 +14,7 @@ class start_button extends StatelessWidget {
         width: 200,
         // padding: const EdgeInsets.all(40.0), // this padding is causing the problem
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.indigo.shade300,
           borderRadius: BorderRadius.circular(30),
         ),
         child: Center(
@@ -24,7 +24,7 @@ class start_button extends StatelessWidget {
             style: const TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w500,
-              color: Colors.black,
+              color: Colors.white,
             ),
           ),
         ),

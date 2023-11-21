@@ -1,8 +1,12 @@
 import 'package:CureHelper/screens/historyPage.dart';
 import 'package:CureHelper/screens/searchPage.dart';
+import 'package:CureHelper/theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:CureHelper/screens/home.dart';
+import 'package:provider/provider.dart';
+import 'package:CureHelper/screens/welcome.dart';
+import '../component/cure_button.dart';
 
 class morePage extends StatefulWidget {
   static const String routename = 'more';
@@ -13,14 +17,16 @@ class morePage extends StatefulWidget {
 }
 
 class _morePageState extends State<morePage> {
+
   @override
+
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: myNavigationBar(),
       //appBar: _appBar(),
       body: Container(
-        decoration: const BoxDecoration(
-          color: Color.fromRGBO(63, 81, 181, 1),
+        decoration:  BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -40,14 +46,14 @@ class _morePageState extends State<morePage> {
                         children: [
                           Icon(
                             Icons.settings,
-                            size: 55,
+                            size: 40,
                             color: Colors.grey[300],
                           ),
                           const SizedBox(
                             width: 20,
                           ),
                           Text(
-                            " S E T T I H G ",
+                            " S E T T I N G ",
                             style: TextStyle(
                               fontSize: 30,
                               fontWeight: FontWeight.w700,
@@ -68,8 +74,9 @@ class _morePageState extends State<morePage> {
               height: MediaQuery.of(context).size.height *
                   0.70, // 70% of screen height
               width: double.infinity,
-              decoration: const BoxDecoration(
-                color: Colors.white,
+              decoration:BoxDecoration(
+                color: Theme.of(context).colorScheme.background,
+
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15),
                     topRight: Radius.circular(25)),
@@ -111,24 +118,33 @@ class _morePageState extends State<morePage> {
                           ),
                         ],
                       ),
+                      CureButton(
+                        onTab: () {
+                          Provider.of<ThemeProvider> (context,listen:false).toggleTheme();// go to home page
+                        },
+                        text: " mode",
+                      ),
                       Padding(
                         padding: const EdgeInsets.only(left: 25, bottom: 25),
-                        child: ListTile(
-                          leading: Icon(
-                            Icons.logout_rounded,
-                            color: Colors.grey[400],
-                            size: 40,
-                          ),
-                          title: const Text(
-                            " L O G O U T ",
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w700,
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.of(context).pushNamed(welcome.routename);
+                            // go to welcome screen
+                          },
+                          child: ListTile(
+                            leading: Icon(
+                              Icons.logout_rounded,
+                              color: Colors.grey[400],
+                              size: 40,
+                            ),
+                            title: const Text(
+                              " L O G O U T ",
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w700,
+                              ),
                             ),
                           ),
-                          onTap: () {
-                            // go to profile screen
-                          },
                         ),
                       ),
                       //log out
@@ -152,15 +168,16 @@ class _morePageState extends State<morePage> {
     }
 
     return Container(
-      color: Colors.white,
+      color: Theme.of(context).colorScheme.background,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+        padding:  EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
         child: GNav(
-          backgroundColor: Colors.white,
-          color: Colors.black, // of text
-          activeColor: Colors.black,
-          tabBackgroundColor: const Color.fromRGBO(63, 81, 181, 0.76),
-          gap: 8, //Space between the icon and the name
+          backgroundColor: Theme.of(context).colorScheme.background,
+          color: Theme.of(context).colorScheme.onBackground, // of text
+          activeColor: Theme.of(context).colorScheme.onBackground,
+          tabBackgroundColor:Theme.of(context).colorScheme.primary,
+
+        gap: 8, //Space between the icon and the name
           padding: const EdgeInsets.all(16),
           onTabChange: _navigateBottomBar, // Change under pressure
           selectedIndex: _selectedIndex,

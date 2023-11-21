@@ -34,7 +34,7 @@ class MyInputField extends StatelessWidget {
             padding: const EdgeInsets.only(left: 10),
             decoration: BoxDecoration(
                 border: Border.all(
-                    color: Colors.grey, width: 1.5 //Thickness of the rectangle
+                    color:  Theme.of(context).colorScheme.secondary, width: 1.5 //Thickness of the rectangle
                     ),
                 borderRadius: BorderRadius.circular(14)),
             child: Row(
@@ -57,15 +57,15 @@ class MyInputField extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                         color: Colors.grey[600],
                       ),
-                      focusedBorder: const UnderlineInputBorder(
+                      focusedBorder:  UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.white,
+                          color:  Theme.of(context).colorScheme.background,
                           width: 0
                         ),
                       ),
-                      enabledBorder: const   UnderlineInputBorder(
+                      enabledBorder:    UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: Colors.white,
+                          color:  Theme.of(context).colorScheme.background,
                         ),
                       ),
                     ),
