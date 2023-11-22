@@ -1,24 +1,16 @@
 import 'package:CureHelper/theme/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class ThemeProvider with ChangeNotifier{
-ThemeData _themeData = lightMode;
-ThemeData get themeData => _themeData;
+class ThemeProvider with ChangeNotifier {
+  bool _isDarkMode = false;
 
-set themeData(ThemeData themeData){
-  _themeData = themeData;
-  notifyListeners();
-}
-void toggleTheme(){
-  if (_themeData == lightMode){
-    themeData = darkMode;
+  bool get isDarkMode => _isDarkMode;
 
-  }else{
-    themeData = lightMode;
+  ThemeData get themeData => _isDarkMode ? darkMode : lightMode;
 
+  void toggleTheme() {
+    _isDarkMode = !_isDarkMode;
+    notifyListeners();
   }
-
-}
-
-
 }
