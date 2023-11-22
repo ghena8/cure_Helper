@@ -10,17 +10,18 @@ import '../component/cure_button.dart';
 
 class morePage extends StatefulWidget {
   static const String routename = 'more';
+
   const morePage({super.key});
 
   @override
-  State<morePage> createState() => _morePageState();
+  _MorePageState createState() => _MorePageState();
 }
 
-class _morePageState extends State<morePage> {
-
+class _MorePageState extends State<morePage> {
   @override
-
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       bottomNavigationBar: myNavigationBar(),
       //appBar: _appBar(),
@@ -98,32 +99,59 @@ class _morePageState extends State<morePage> {
                           //profile
                           Padding(
                             padding: const EdgeInsets.only(left: 25),
-                            child: ListTile(
-                              leading: Icon(
-                                Icons.account_circle,
-                                color: Colors.grey[400],
-                                size: 40,
-                              ),
-                              title: const Text(
-                                " P R O F I L E ",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w700,
+                            child: Column(
+                              children: [
+                                ListTile(
+                                  leading: Icon(
+                                    Icons.account_circle,
+                                    color: Colors.grey[400],
+                                    size: 40,
+                                  ),
+                                  title: const Text(
+                                    " P R O F I L E ",
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    // go to profile screen
+                                  },
                                 ),
-                              ),
-                              onTap: () {
-                                // go to profile screen
-                              },
+                                Consumer<ThemeProvider>(
+                                  builder: (context, themeProvider, child) => Padding(
+                                    padding: const EdgeInsets.only(left: 10), // Adjust the value here as needed
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        IconButton(
+                                          icon: Icon(
+                                            themeProvider.isDarkMode ? Icons.nightlight_round : Icons.wb_sunny_rounded,
+                                            size: 40,
+                                            color: themeProvider.isDarkMode ? Colors.yellow : Colors.orange,
+                                          ),
+                                          onPressed: () {
+                                            themeProvider.toggleTheme();
+                                          },
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
+
                         ],
                       ),
-                      CureButton(
+
+
+                     /* CureButton(
                         onTab: () {
                           Provider.of<ThemeProvider> (context,listen:false).toggleTheme();// go to home page
                         },
                         text: " mode",
-                      ),
+                      ),*/
                       Padding(
                         padding: const EdgeInsets.only(left: 25, bottom: 25),
                         child: GestureDetector(
