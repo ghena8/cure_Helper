@@ -1,11 +1,12 @@
+import 'package:CureHelper/services/firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:CureHelper/screens/home.dart';
 import 'package:CureHelper/component/input_field.dart';
 import 'package:intl/intl.dart';
 import 'package:CureHelper/component/my_button.dart';
-import 'package:get/get.dart';
-import '../controllers/taskM_controller.dart';
-import '../models/medicineTask.dart';
+//import 'package:get/get.dart';
+//import '../controllers/taskM_controller.dart';
+//import '../models/medicineTask.dart';
 
 class AddMedicinePage extends StatefulWidget {
   static const String routename = 'add medicine ';
@@ -16,7 +17,12 @@ class AddMedicinePage extends StatefulWidget {
 }
 
 class _AddMedicinePageState extends State<AddMedicinePage> {
-  final TaskMController _taskMController = Get.put(TaskMController());
+  // firestore
+  final FirestoreService firestoreService = FirestoreService();
+
+  //final TaskMController _taskMController = Get.put(TaskMController());
+
+  //text controller
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _priceController = TextEditingController();
 
@@ -25,7 +31,53 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
   String _startTime = DateFormat("hh:mm a").format(DateTime.now()).toString();
   int _selectedAmountBox = 1;
   int _selectedDuration = 1;
-  List<int> amountBoxList = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,50,60,70,80,90];
+  List<int> amountBoxList = [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    50,
+    60,
+    70,
+    80,
+    90
+  ];
   int _selectedPackages = 1;
   int _selectedDose = 1;
   List<int> packagesList = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -84,7 +136,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                     ),
                   ),
                 ],
-              //Medicine name
+                //Medicine name
                 // MyInputField(
                 //   title: "Medicine name: ",
                 //   hint: "Enter your medicine name ",
@@ -98,8 +150,8 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                 // ),
               ),
               //Duration
-               MyInputField(
-                title:  "How many days will take medicine: ",
+              MyInputField(
+                title: "How many days will take medicine: ",
                 hint: "$_selectedDuration days",
                 widget: DropdownButton(
                   items:
@@ -354,7 +406,18 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                       onTab: () {
                         if (_titleController.text.isNotEmpty &&
                             _priceController.text.isNotEmpty) {
-                          _addTaskMToDb(); // add to database 'method '
+                          //_addTaskMToDb(); // add to database 'method '
+
+                          // add a new medicine
+                          // if (docID == null ) {
+                          firestoreService.addNote(_titleController.text); // }
+                          // // update a medicine data
+                          // else {
+                          //   firestoreService.updateNote(docID, _titleController.text);
+                          // }
+
+                          //clear the text controller
+                          _titleController.clear();
 
                           Navigator.of(context)
                               .pushNamed(homePage.routename); // go to home page
@@ -372,25 +435,25 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
     );
   }
 
-  _addTaskMToDb() async {
-    int value = await _taskMController.addTaskM(
-      task: medicineTask(
-        medicineName: _titleController.text,
-        price: _priceController.text,
-        isCompleted: 0,
-        amountOfMedication: _selectedAmountBox,
-        packagesNumber: _selectedPackages,
-        medicationDose: _selectedDose,
-        startDate: DateFormat.yMd().format(_selectedDate),
-        time: _startTime,
-        condition: _selectedCondition,
-        color: _selectedColor,
-        remind: _selectedRemind,
-        repeat: _selectedRepeat,
-      ),
-    );
-    print("My id is " + "$value ");
-  }
+  // _addTaskMToDb() async {
+  //   int value = await _taskMController.addTaskM(
+  //     task: medicineTask(
+  //       medicineName: _titleController.text,
+  //       price: _priceController.text,
+  //       isCompleted: 0,
+  //       amountOfMedication: _selectedAmountBox,
+  //       packagesNumber: _selectedPackages,
+  //       medicationDose: _selectedDose,
+  //       startDate: DateFormat.yMd().format(_selectedDate),
+  //       time: _startTime,
+  //       condition: _selectedCondition,
+  //       color: _selectedColor,
+  //       remind: _selectedRemind,
+  //       repeat: _selectedRepeat,
+  //     ),
+  //   );
+  //   print("My id is " + "$value ");
+  // }
 
   final sanacbar = SnackBar(
     backgroundColor: Colors.grey[300],
