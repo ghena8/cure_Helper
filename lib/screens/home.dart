@@ -1,5 +1,6 @@
 //import 'package:CureHelper/component/navigationBar.dart';
 import 'package:CureHelper/screens/addPage.dart';
+import 'package:CureHelper/screens/moreMedicineData.dart';
 import 'package:CureHelper/services/firestore.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
@@ -108,26 +109,48 @@ class _homePageState extends State<homePage> {
                 // get note from each doc
                 Map<String, dynamic> data =
                     document.data() as Map<String, dynamic>;
-                String noteText = data['note'];
+                String noteText = data['medicineName'];
 
                 // display as a list tile for UI
                 return ListTile(
-                  title: Text(noteText),
+                  title: Row(
+                    children: [
+                      const Icon(
+                        Icons.medication,
+                        color: Color.fromARGB(255, 183, 36, 26),
+                        size: 38,
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Text(
+                        noteText,
+                        style: const TextStyle(
+                          fontSize: 21,
+                          fontWeight: FontWeight.w600,
+                          //color: Color.fromARGB(225, 158, 158, 158),
+                        ),
+                      ),
+                    ],
+                  ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      // Edit or update medication data
+                      // go to see more information
                       IconButton(
                         onPressed: () {
-                          // supposed to go to the add page and modify the data
+                         Navigator.of(context).pushNamed(moreMData.routename);
                         },
-                        icon: const Icon(Icons.edit),
+                        icon: const Icon(
+                          Icons.medical_information,
+                          size: 28,
+                        ), //delete_forever
                       ),
 
                       // delet button
                       IconButton(
                         onPressed: () => firestoreService.deletNote(docID),
-                        icon: const Icon(Icons.task_alt),
+                        icon: const Icon(Icons.task_alt, size: 28,),
                       ),
                     ],
                   ),

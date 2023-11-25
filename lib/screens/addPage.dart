@@ -410,7 +410,19 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
 
                           // add a new medicine
                           // if (docID == null ) {
-                          firestoreService.addNote(_titleController.text); // }
+                          firestoreService.addNote(
+                            _titleController.text,
+                            _priceController.text,
+                            _selectedAmountBox,
+                            _selectedPackages,
+                            _selectedDose,
+                            DateFormat.yMd().format(_selectedDate),
+                            _startTime,
+                            _selectedCondition,
+                            _selectedColor,
+                            _selectedRemind,
+                            _selectedRepeat,
+                          ); // }
                           // // update a medicine data
                           // else {
                           //   firestoreService.updateNote(docID, _titleController.text);
