@@ -1,5 +1,8 @@
 //import 'package:CureHelper/component/navigationBar.dart';
 import 'package:CureHelper/screens/addPage.dart';
+import 'package:CureHelper/screens/moreMedicineData.dart';
+import 'package:CureHelper/services/firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -10,12 +13,14 @@ import 'package:CureHelper/screens/searchPage.dart';
 import 'package:CureHelper/screens/morePage.dart';
 
 class homePage extends StatefulWidget {
-  static const String routename =    "home";
+  static const String routename = "home";
   const homePage({super.key});
 
   @override
   State<homePage> createState() => _homePageState();
 }
+
+final FirestoreService firestoreService = FirestoreService();
 
 DateTime _selectedDate = DateTime.now();
 
@@ -26,7 +31,7 @@ class _homePageState extends State<homePage> {
       bottomNavigationBar: myNavigationBar(),
       //appBar: _appBar(),
       body: Container(
-        decoration:  BoxDecoration(
+        decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary,
         ),
         child: Column(
@@ -58,9 +63,9 @@ class _homePageState extends State<homePage> {
               height: MediaQuery.of(context).size.height *
                   0.75, // 70% of screen height
               width: double.infinity,
-              decoration:  BoxDecoration(
+              decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.background,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(15),
                     topRight: Radius.circular(25)),
               ),
@@ -73,6 +78,7 @@ class _homePageState extends State<homePage> {
                   children: [
                     _addMedicineBar(), // First row (day, date, and add button)
                     _addDateBar(), // Second row (date_timeline)
+                    _readMedicine() // Thord item is a list that shows the medications that have been saved
                   ],
                 ),
               ),
@@ -80,6 +86,84 @@ class _homePageState extends State<homePage> {
           ],
         ),
       ),
+    );
+  }
+
+  _readMedicine() {
+    return StreamBuilder<QuerySnapshot>(
+      stream: firestoreService.getNoteStream(),
+      builder: (context, snapshot) {
+        // if we have data, get all the docs
+        if (snapshot.hasData) {
+          List notesList = snapshot.data!.docs;
+
+          // display as a list
+          return Expanded(
+            child: ListView.builder(
+              itemCount: notesList.length,
+              itemBuilder: (context, index) {
+                // get each individual doc
+                DocumentSnapshot document = notesList[index];
+                String docID = document.id;
+
+                // get note from each doc
+                Map<String, dynamic> data =
+                    document.data() as Map<String, dynamic>;
+                String noteText = data['medicineName'];
+
+                // display as a list tile for UI
+                return ListTile(
+                  title: Row(
+                    children: [
+                      const Icon(
+                        Icons.medication,
+                        color: Color.fromARGB(255, 183, 36, 26),
+                        size: 38,
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Text(
+                        noteText,
+                        style: const TextStyle(
+                          fontSize: 21,
+                          fontWeight: FontWeight.w600,
+                          //color: Color.fromARGB(225, 158, 158, 158),
+                        ),
+                      ),
+                    ],
+                  ),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // go to see more information
+                      IconButton(
+                        onPressed: () {
+                         Navigator.of(context).pushNamed(moreMData.routename);
+                        },
+                        icon: const Icon(
+                          Icons.medical_information,
+                          size: 28,
+                        ), //delete_forever
+                      ),
+
+                      // delet button
+                      IconButton(
+                        onPressed: () => firestoreService.deletNote(docID),
+                        icon: const Icon(Icons.task_alt, size: 28,),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          );
+        }
+        //if there is no data return nothing
+        else {
+          return const Text(" No Medicine .. ");
+        }
+      },
     );
   }
 
@@ -111,7 +195,8 @@ class _homePageState extends State<homePage> {
           ),
           CureButton(
             onTab: () {
-              Navigator.of(context).pushNamed(AddMedicinePage.routename); // go to add page
+              Navigator.of(context)
+                  .pushNamed(AddMedicinePage.routename); // go to add page
             },
             text: "     +     ",
             //variants: "dark",
@@ -129,7 +214,7 @@ class _homePageState extends State<homePage> {
         height: 95,
         width: 80,
         initialSelectedDate: DateTime.now(),
-        selectionColor:  Theme.of(context).colorScheme.primary,
+        selectionColor: Theme.of(context).colorScheme.primary,
         selectedTextColor: Colors.white,
         dateTextStyle: const TextStyle(
           fontSize: 26,
@@ -175,7 +260,7 @@ class _homePageState extends State<homePage> {
           onTabChange: _navigateBottomBar, // Change under pressure
           selectedIndex: _selectedIndex,
           tabs: [
-              GButton(
+            GButton(
               onPressed: () {
                 Navigator.of(context).pushNamed(homePage.routename);
               },

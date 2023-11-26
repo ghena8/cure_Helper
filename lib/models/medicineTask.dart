@@ -66,3 +66,15 @@ class medicineTask {
     return data;
   }
 }
+//  medicineName: _titleController.text,
+//         price: _priceController.text,
+//         isCompleted: 0,
+//         amountOfMedication: _selectedAmountBox,
+//         packagesNumber: _selectedPackages,
+//         medicationDose: _selectedDose,
+//         startDate: DateFormat.yMd().format(_selectedDate),
+//         time: _startTime,
+//         condition: _selectedCondition,
+//         color: _selectedColor,
+//         remind: _selectedRemind,
+//         repeat: _selectedRepeat,

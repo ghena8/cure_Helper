@@ -4,6 +4,7 @@ import 'package:CureHelper/screens/addPage.dart';
 import 'package:CureHelper/screens/forgotPassword.dart';
 import 'package:CureHelper/screens/historyPage.dart';
 import 'package:CureHelper/screens/home.dart';
+import 'package:CureHelper/screens/moreMedicineData.dart';
 import 'package:CureHelper/screens/searchPage.dart';
 import 'package:CureHelper/screens/morePage.dart';
 import 'package:CureHelper/theme/theme_provider.dart';
@@ -55,7 +56,7 @@ class _MyAppState extends State<MyApp> {
         "more" :(context) => const morePage(),
         "search" :(context) => const searchPage(),
         "history" :(context) => const HistoryPage(),
-
+        "moreMData"  :(context) => const moreMData(),
       },
     );
   }
