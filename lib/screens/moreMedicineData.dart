@@ -5,15 +5,34 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class moreMData extends StatefulWidget {
   static const String routename = 'moreMData';
-  final String docId;
-  const moreMData({super.key, required this.docId});
+
+  String docId;
+  moreMData(this.docId);
 
   @override
   State<moreMData> createState() => _moreMDataState();
 }
 
 class _moreMDataState extends State<moreMData> {
-  final TextEditingController _nameController = TextEditingController();
+  //const moreMData({super.key, required this.docId});
+  DocumentReference? detailsMData;
+
+  List moreDetalOfM = [];
+  @override
+  void initState() {
+    super.initState();
+    detailsMData =
+        FirebaseFirestore.instance.collection('notes').doc(widget.docId);
+    getData();
+  }
+  //detailsMData = FirebaseFirestore.instance.collection('notes').doc(widget.docId);
+
+  getData() async {
+    var responsebody = await detailsMData!.get();
+    setState(() {
+      moreDetalOfM.add(responsebody.data());
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +68,7 @@ class _moreMDataState extends State<moreMData> {
                             ),
                           ),
                           const SizedBox(
-                            width: 4,
+                            width: 28,
                           ),
                           const Text(
                             "Details information",
@@ -96,13 +115,21 @@ class _moreMDataState extends State<moreMData> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    const Text(
-                      "// name from database ",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey),
-                    ),
+                    moreDetalOfM.isEmpty || moreDetalOfM == null
+                        ? const Text(
+                            " Loding",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey),
+                          )
+                        : Text(
+                            "${moreDetalOfM[0]['medicineName']}",
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey),
+                          ),
                     const SizedBox(height: 28),
                     // row 2: duration
                     const Text(
@@ -130,13 +157,21 @@ class _moreMDataState extends State<moreMData> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    const Text(
-                      "// price from database ",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey),
-                    ),
+                    moreDetalOfM.isEmpty || moreDetalOfM == null
+                        ? const Text(
+                            " Loding",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey),
+                          )
+                        : Text(
+                            "${moreDetalOfM[0]['price']}",
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey),
+                          ),
                     const SizedBox(height: 28),
                     //row 4 : time
                     const Text(
@@ -147,42 +182,59 @@ class _moreMDataState extends State<moreMData> {
                       ),
                     ),
                     const SizedBox(height: 12),
-                    const Text(
-                      "// Time from DB",
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey),
-                    ),
+                    moreDetalOfM.isEmpty || moreDetalOfM == null
+                        ? const Text(
+                            " Loding",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey),
+                          )
+                        : Text(
+                            "${moreDetalOfM[0]['time']}",
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey),
+                          ),
                     const SizedBox(height: 28),
                     //row 5 : the end day
-                    const Row(
+                    Row(
                       children: [
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "Start date",
                               style: TextStyle(
                                 fontSize: 23,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            SizedBox(height: 14),
-                            Text(
-                              "// Date from DB",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey),
-                            ),
+                            const SizedBox(height: 14),
+                            moreDetalOfM.isEmpty || moreDetalOfM == null
+                                ? const Text(
+                                    " Loding",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey),
+                                  )
+                                : Text(
+                                    "${moreDetalOfM[0]['startDate']}",
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey),
+                                  ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 50,
                         ),
-                        Column(
+                        const Column(
+                          // befor do "End date", try to delete const
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -195,7 +247,7 @@ class _moreMDataState extends State<moreMData> {
                             ),
                             SizedBox(height: 14),
                             Text(
-                               "//Result equation",
+                              "//Result equation",
                               style: TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.w500,
@@ -226,18 +278,5 @@ class _moreMDataState extends State<moreMData> {
         ),
       ),
     );
-  }
-
-  void cheackMedicine() {
-    FirebaseFirestore.instance
-        .collection('notes')
-        .where("medicineName", isEqualTo: _nameController)
-        .get()
-        .then((value) => {
-              value.docs.forEach((element) {
-                print(element.id);
-                print(element.data());
-              })
-            });
   }
 }

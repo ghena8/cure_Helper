@@ -113,25 +113,18 @@ class _homePageState extends State<homePage> {
 
                 // display as a list tile for UI
                 return ListTile(
-                  title: Row(
-                    children: [
-                      const Icon(
-                        Icons.medication,
-                        color: Color.fromARGB(255, 183, 36, 26),
-                        size: 38,
-                      ),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      Text(
-                        "$noteText ",
-                        style: const TextStyle(
-                          fontSize: 21,
-                          fontWeight: FontWeight.w600,
-                          //color: Color.fromARGB(225, 158, 158, 158),
-                        ),
-                      ),
-                    ],
+                  leading: Icon(
+                    Icons.medication,
+                    color: Colors.red[700],
+                    size: 38,
+                  ),
+                  title: Text(
+                    "$noteText ",
+                    style: const TextStyle(
+                      fontSize: 21,
+                      fontWeight: FontWeight.w600,
+                      //color: Color.fromARGB(225, 158, 158, 158),
+                    ),
                   ),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
@@ -140,9 +133,7 @@ class _homePageState extends State<homePage> {
                       IconButton(
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => moreMData(
-                                    docId: docID,
-                                  )));
+                              builder: (context) => moreMData(docID,)));
                         },
                         icon: const Icon(
                           Icons.medical_information,
