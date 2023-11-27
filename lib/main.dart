@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
         "more" :(context) => const morePage(),
         "search" :(context) => const searchPage(),
         "history" :(context) => const HistoryPage(),
-        "moreMData"  :(context) => const moreMData(),
+       // "moreMData"  :(context) => const moreMData(),
       },
     );
   }

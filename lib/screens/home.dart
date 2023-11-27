@@ -78,7 +78,7 @@ class _homePageState extends State<homePage> {
                   children: [
                     _addMedicineBar(), // First row (day, date, and add button)
                     _addDateBar(), // Second row (date_timeline)
-                    _readMedicine() // Thord item is a list that shows the medications that have been saved
+                    _readMedicine(), // Thord item is a list that shows the medications that have been saved
                   ],
                 ),
               ),
@@ -124,7 +124,7 @@ class _homePageState extends State<homePage> {
                         width: 12,
                       ),
                       Text(
-                        noteText,
+                        "$noteText ",
                         style: const TextStyle(
                           fontSize: 21,
                           fontWeight: FontWeight.w600,
@@ -139,7 +139,10 @@ class _homePageState extends State<homePage> {
                       // go to see more information
                       IconButton(
                         onPressed: () {
-                         Navigator.of(context).pushNamed(moreMData.routename);
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => moreMData(
+                                    docId: docID,
+                                  )));
                         },
                         icon: const Icon(
                           Icons.medical_information,
@@ -150,7 +153,10 @@ class _homePageState extends State<homePage> {
                       // delet button
                       IconButton(
                         onPressed: () => firestoreService.deletNote(docID),
-                        icon: const Icon(Icons.task_alt, size: 28,),
+                        icon: const Icon(
+                          Icons.task_alt,
+                          size: 28,
+                        ),
                       ),
                     ],
                   ),
