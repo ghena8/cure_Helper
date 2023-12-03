@@ -110,6 +110,7 @@ class _homePageState extends State<homePage> {
                 Map<String, dynamic> data =
                     document.data() as Map<String, dynamic>;
                 String noteText = data['medicineName'];
+                String condition = data['condition'];
 
                 // display as a list tile for UI
                 return ListTile(
@@ -126,14 +127,14 @@ class _homePageState extends State<homePage> {
                       //color: Color.fromARGB(225, 158, 158, 158),
                     ),
                   ),
+                  subtitle:condition != "None" ? Text(" $condition") : null,
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       // go to see more information
                       IconButton(
                         onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => moreMData(docID,)));
+                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => moreMData(docID)));
                         },
                         icon: const Icon(
                           Icons.medical_information,

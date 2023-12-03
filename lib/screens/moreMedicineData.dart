@@ -2,6 +2,7 @@ import 'package:CureHelper/screens/home.dart';
 import 'package:CureHelper/component/my_button.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 
 class moreMData extends StatefulWidget {
   static const String routename = 'moreMData';
@@ -89,7 +90,7 @@ class _moreMDataState extends State<moreMData> {
             ),
             Container(
               height: MediaQuery.of(context).size.height *
-                  0.80, // 80% of screen height
+                  0.83, // 80% of screen height
               width: double.infinity,
               alignment: Alignment.center,
               decoration: BoxDecoration(
@@ -106,58 +107,84 @@ class _moreMDataState extends State<moreMData> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 28),
-                    // row 1 : the name of medicin
-                    const Text(
-                      "Medicine ame: ",
-                      style: TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.w700,
-                      ),
+                    // row 1 : the name of medicin +  // row 1 : cost
+                    Row(
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Medicine name: ",
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const SizedBox(height: 14),
+                            moreDetalOfM.isEmpty || moreDetalOfM == null
+                                ? const Text(
+                                    " Loding",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey),
+                                  )
+                                : Text(
+                                    "${moreDetalOfM[0]['medicineName']}",
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey),
+                                  ),
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Column(
+                          // befor do "End date", try to delete const
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Medicine cost: ",
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const SizedBox(height: 14),
+                            moreDetalOfM.isEmpty || moreDetalOfM == null
+                                ? const Text(
+                                    " Loding",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey),
+                                  )
+                                : Text(
+                                    "${moreDetalOfM[0]['price']}",
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey),
+                                  ),
+                          ],
+                        ),
+                      ],
                     ),
-                    const SizedBox(height: 12),
-                    moreDetalOfM.isEmpty || moreDetalOfM == null
-                        ? const Text(
-                            " Loding",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey),
-                          )
-                        : Text(
-                            "${moreDetalOfM[0]['medicineName']}",
-                            style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey),
-                          ),
                     const SizedBox(height: 28),
                     // row 2: duration
                     const Text(
                       "Duration : ",
                       style: TextStyle(
-                        fontSize: 23,
+                        fontSize: 22,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
                     const SizedBox(height: 12),
-                    const Text(
-                      "// The result equation", //The output call from a method contains a formula to calculate the duration
-                      style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey),
-                    ),
-                    const SizedBox(height: 28),
-                    // row 3 : cost
-                    const Text(
-                      "Medicine cost: ",
-                      style: TextStyle(
-                        fontSize: 23,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                    moreDetalOfM.isEmpty || moreDetalOfM == null
+                     moreDetalOfM.isEmpty || moreDetalOfM == null
                         ? const Text(
                             " Loding",
                             style: TextStyle(
@@ -166,18 +193,18 @@ class _moreMDataState extends State<moreMData> {
                                 color: Colors.grey),
                           )
                         : Text(
-                            "${moreDetalOfM[0]['price']}",
-                            style: const TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey),
-                          ),
+                    "${calculateMedicationDuration(saveStartDateValue(), saveamountOfMedicationValue(), saveRepeatValue()) }", //The output call from a method contains a formula to calculate the duration
+                      style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.grey),
+                    ),
                     const SizedBox(height: 28),
-                    //row 4 : time
+                    //row 3 : time
                     const Text(
                       "Time to take medicine: ",
                       style: TextStyle(
-                        fontSize: 23,
+                        fontSize: 22,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -198,7 +225,33 @@ class _moreMDataState extends State<moreMData> {
                                 color: Colors.grey),
                           ),
                     const SizedBox(height: 28),
-                    //row 5 : the end day
+                    //row 4 : condation
+                    const Text(
+                      "Condition for taking medication: ",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    moreDetalOfM.isEmpty || moreDetalOfM == null
+                        ? const Text(
+                            " Loding",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey),
+                          )
+                        : Text(
+                            "${moreDetalOfM[0]['condition']}",
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey),
+                          ), 
+
+                    const SizedBox(height: 28),
+                    //row 5: the end day + start day
                     Row(
                       children: [
                         Column(
@@ -208,7 +261,7 @@ class _moreMDataState extends State<moreMData> {
                             const Text(
                               "Start date",
                               style: TextStyle(
-                                fontSize: 23,
+                                fontSize: 22,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
@@ -228,6 +281,7 @@ class _moreMDataState extends State<moreMData> {
                                         fontWeight: FontWeight.w500,
                                         color: Colors.grey),
                                   ),
+                                  
                           ],
                         ),
                         const SizedBox(
@@ -257,7 +311,32 @@ class _moreMDataState extends State<moreMData> {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 100),
+                    const SizedBox(height: 28),
+                    //row 4 : condation
+                    const Text(
+                      "Repeat :  ",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    moreDetalOfM.isEmpty || moreDetalOfM == null
+                        ? const Text(
+                            " Loding",
+                            style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey),
+                          )
+                        : Text(
+                            "${moreDetalOfM[0]['repeat']}",
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.grey),
+                          ),
+                    const SizedBox(height: 40),
                     Column(
                       //mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -279,4 +358,63 @@ class _moreMDataState extends State<moreMData> {
       ),
     );
   }
+String saveRepeatValue() {
+  String repeatText = "";
+  
+  repeatText = moreDetalOfM.isEmpty || moreDetalOfM == null ? "Loading" : moreDetalOfM[0]['repeat'];
+  
+  // يمكنك استخدام قيمة repeatText في أي مكان آخر داخل الوظيفة
+  return repeatText;
+}
+
+
+int saveamountOfMedicationValue() {
+  int amountOfMedication = 0;
+  
+  amountOfMedication = moreDetalOfM.isEmpty || moreDetalOfM == null ? "Loading" : moreDetalOfM[0]['amountOfMedication'];
+  
+  // يمكنك استخدام قيمة repeatText في أي مكان آخر داخل الوظيفة
+  return amountOfMedication;
+}
+
+
+String saveStartDateValue() {
+  String startDate = "";
+  
+   startDate = moreDetalOfM.isEmpty || moreDetalOfM == null ? "Loading" : moreDetalOfM[0][ 'startDate'];
+  
+  // يمكنك استخدام قيمة repeatText في أي مكان آخر داخل الوظيفة
+  return startDate;
+}
+
+
+Duration calculateMedicationDuration(String starTime, int pillsPerBox, String interval) {
+  DateTime? endDate;
+  DateTime startTime =  DateFormat("M/d/yyyy").parse(starTime);
+
+  if (interval == 'daily') {
+    endDate = startTime.add(const Duration(days: 1));
+  } else if (interval == 'weekly') {
+    endDate = startTime.add(const Duration(days: 7));
+  } else if (interval == 'monthly') {
+    endDate = startTime.add(const Duration(days: 30));
+  }
+
+  DateTime now = DateTime.now();
+if (endDate != null && endDate.isAfter(now)) {
+  endDate = now;
+} else if  (endDate == null) {
+  endDate = now;
+}
+
+  Duration duration = endDate.difference(startTime);
+  int totalPills = pillsPerBox;
+  int pillsLeft = totalPills - (duration.inDays * pillsPerBox);
+
+
+  print('مدة الاستخدام: ${duration.inDays} أيام');
+  print('عدد الحبوب المتبقية: $pillsLeft حبة');
+
+  return duration;
+}
 }
