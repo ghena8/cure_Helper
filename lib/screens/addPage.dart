@@ -414,6 +414,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                             _titleController.text,
                             _priceController.text,
                             _selectedAmountBox,
+                            _selectedDuration,
                             _selectedPackages,
                             _selectedDose,
                             DateFormat.yMd().format(_selectedDate),

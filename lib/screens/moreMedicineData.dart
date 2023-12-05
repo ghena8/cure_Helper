@@ -143,7 +143,6 @@ class _moreMDataState extends State<moreMData> {
                           width: 20,
                         ),
                         Column(
-                          // befor do "End date", try to delete const
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -176,28 +175,71 @@ class _moreMDataState extends State<moreMData> {
                     ),
                     const SizedBox(height: 28),
                     // row 2: duration
-                    const Text(
-                      "Duration : ",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                    const SizedBox(height: 12),
-                     moreDetalOfM.isEmpty || moreDetalOfM == null
-                        ? const Text(
-                            " Loding",
-                            style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.grey),
-                          )
-                        : Text(
-                    "${calculateMedicationDuration(saveStartDateValue(), saveamountOfMedicationValue(), saveRepeatValue()) }", //The output call from a method contains a formula to calculate the duration
-                      style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.grey),
+                    Row(
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Duration : ",
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const SizedBox(height: 12),
+                            moreDetalOfM.isEmpty || moreDetalOfM == null
+                                ? const Text(
+                                    " Loding",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey),
+                                  )
+                                : Text(
+                                    checkDuration(saveDurationValue()),
+                                    //"${moreDetalOfM[0]['duration']}  days",
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey),
+                                  ),
+                          ],
+                        ),
+                        const SizedBox(
+                          width: 80,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "Medication dose: ",
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
+                            const SizedBox(height: 14),
+                            moreDetalOfM.isEmpty || moreDetalOfM == null
+                                ? const Text(
+                                    " Loding",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey),
+                                  )
+                                : Text(
+                                    "${moreDetalOfM[0]['medicationDose']} pills in a day",
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey),
+                                  ),
+                          ],
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 28),
                     //row 3 : time
@@ -248,7 +290,7 @@ class _moreMDataState extends State<moreMData> {
                                 fontSize: 20,
                                 fontWeight: FontWeight.w500,
                                 color: Colors.grey),
-                          ), 
+                          ),
 
                     const SizedBox(height: 28),
                     //row 5: the end day + start day
@@ -281,32 +323,39 @@ class _moreMDataState extends State<moreMData> {
                                         fontWeight: FontWeight.w500,
                                         color: Colors.grey),
                                   ),
-                                  
                           ],
                         ),
                         const SizedBox(
                           width: 50,
                         ),
-                        const Column(
-                          // befor do "End date", try to delete const
+                        Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
+                            const Text(
                               "End date",
                               style: TextStyle(
                                 fontSize: 23,
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            SizedBox(height: 14),
-                            Text(
-                              "//Result equation",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.grey),
-                            ),
+                            const SizedBox(height: 14),
+                            moreDetalOfM.isEmpty || moreDetalOfM == null
+                                ? const Text(
+                                    " Loding",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey),
+                                  )
+                                : Text(
+                                    calculateEndDate(saveDurationValue(),
+                                        saveStartDateValue()),
+                                    style: const TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
+                                        color: Colors.grey),
+                                  ),
                           ],
                         ),
                       ],
@@ -358,63 +407,98 @@ class _moreMDataState extends State<moreMData> {
       ),
     );
   }
-String saveRepeatValue() {
-  String repeatText = "";
-  
-  repeatText = moreDetalOfM.isEmpty || moreDetalOfM == null ? "Loading" : moreDetalOfM[0]['repeat'];
-  
-  // يمكنك استخدام قيمة repeatText في أي مكان آخر داخل الوظيفة
-  return repeatText;
-}
 
-
-int saveamountOfMedicationValue() {
-  int amountOfMedication = 0;
-  
-  amountOfMedication = moreDetalOfM.isEmpty || moreDetalOfM == null ? "Loading" : moreDetalOfM[0]['amountOfMedication'];
-  
-  // يمكنك استخدام قيمة repeatText في أي مكان آخر داخل الوظيفة
-  return amountOfMedication;
-}
-
-
-String saveStartDateValue() {
-  String startDate = "";
-  
-   startDate = moreDetalOfM.isEmpty || moreDetalOfM == null ? "Loading" : moreDetalOfM[0][ 'startDate'];
-  
-  // يمكنك استخدام قيمة repeatText في أي مكان آخر داخل الوظيفة
-  return startDate;
-}
-
-
-Duration calculateMedicationDuration(String starTime, int pillsPerBox, String interval) {
-  DateTime? endDate;
-  DateTime startTime =  DateFormat("M/d/yyyy").parse(starTime);
-
-  if (interval == 'daily') {
-    endDate = startTime.add(const Duration(days: 1));
-  } else if (interval == 'weekly') {
-    endDate = startTime.add(const Duration(days: 7));
-  } else if (interval == 'monthly') {
-    endDate = startTime.add(const Duration(days: 30));
+// resd from database the (RepeatValue)
+  String saveRepeatValue() {
+    String repeatText = "";
+    repeatText = moreDetalOfM.isEmpty || moreDetalOfM == null
+        ? "Loading"
+        : moreDetalOfM[0]['repeat'];
+    return repeatText;
   }
 
-  DateTime now = DateTime.now();
-if (endDate != null && endDate.isAfter(now)) {
-  endDate = now;
-} else if  (endDate == null) {
-  endDate = now;
-}
+// resd from database the (amountOfMedicationValue)
+  int saveamountOfMedicationValue() {
+    int amountOfMedication = 0;
 
-  Duration duration = endDate.difference(startTime);
-  int totalPills = pillsPerBox;
-  int pillsLeft = totalPills - (duration.inDays * pillsPerBox);
+    amountOfMedication = moreDetalOfM.isEmpty || moreDetalOfM == null
+        ? "Loading"
+        : moreDetalOfM[0]['amountOfMedication'];
+    return amountOfMedication;
+  }
 
+// resd from database the (DurationValue)
+  int saveDurationValue() {
+    int amountOfMedication = 0;
 
-  print('مدة الاستخدام: ${duration.inDays} أيام');
-  print('عدد الحبوب المتبقية: $pillsLeft حبة');
+    amountOfMedication = moreDetalOfM.isEmpty || moreDetalOfM == null
+        ? "Loading"
+        : moreDetalOfM[0]['duration'];
+    return amountOfMedication;
+  }
 
-  return duration;
-}
+// resd from database the (saveStartDateValue)
+  String saveStartDateValue() {
+    String startDate = "";
+
+    startDate = moreDetalOfM.isEmpty || moreDetalOfM == null
+        ? "Loading"
+        : moreDetalOfM[0]['startDate'];
+
+    return startDate;
+  }
+
+  String checkDuration(int days) {
+    String durationOutput;
+    if (days < 30) {
+      // print('القيمة: $days يوم');
+      durationOutput = ' $days days ';
+      return durationOutput;
+    } else {
+      int months = days ~/ 30;
+      int remainingDays = days % 30;
+      // print('شهر: $months, المتبقي من الأيام: $remainingDays');
+      if (remainingDays == 0) {
+        durationOutput = ' $months  months';
+        return durationOutput;
+        //print('شهر: $months');
+      } else {
+        durationOutput = ' $months and $remainingDays days ';
+        return durationOutput;
+        // print('شهر: $months, المتبقي من الأيام: $remainingDays');
+      }
+    }
+  }
+
+  String calculateEndDate(int duration, String startDate) {
+    DateTime startTime = DateFormat("M/d/yyyy").parse(startDate);
+    DateTime endDate = startTime.add(Duration(days: duration - 1));
+    String formattedDate = DateFormat('M/d/yyyy').format(endDate);
+    return formattedDate;
+  }
+
+  // Duration calculateMedicationDuration(
+  //     String starTime, int pillsPerBox, String interval) {
+  //   DateTime? endDate;
+  //   DateTime startTime = DateFormat("M/d/yyyy").parse(starTime);
+  //   if (interval == 'daily') {
+  //     endDate = startTime.add(const Duration(days: 1));
+  //   } else if (interval == 'weekly') {
+  //     endDate = startTime.add(const Duration(days: 7));
+  //   } else if (interval == 'monthly') {
+  //     endDate = startTime.add(const Duration(days: 30));
+  //   }
+  //   DateTime now = DateTime.now();
+  //   if (endDate != null && endDate.isAfter(now)) {
+  //     endDate = now;
+  //   } else if (endDate == null) {
+  //     endDate = now;
+  //   }
+  //   Duration duration = endDate.difference(startTime);
+  //   int totalPills = pillsPerBox;
+  //   int pillsLeft = totalPills - (duration.inDays * pillsPerBox);
+  //   print('مدة الاستخدام: ${duration.inDays} أيام');
+  //   print('عدد الحبوب المتبقية: $pillsLeft حبة');
+  //   return duration;
+  // }
 }
