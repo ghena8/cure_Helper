@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class MyInputField extends StatelessWidget {
-  final String title;
+  final dynamic title; // Can be either a String or an int
   final String hint;
   final TextEditingController? controller;
   final Widget? widget;
@@ -17,6 +17,8 @@ class MyInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     // String displayedTitle = title.toString(); // Convert the title to a String for display
+
     return Container(
       margin: const EdgeInsets.only(top: 12),
       child: Column(

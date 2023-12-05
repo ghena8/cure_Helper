@@ -101,67 +101,188 @@ class _homePageState extends State<homePage> {
           return Expanded(
             child: ListView.builder(
               itemCount: notesList.length,
+              //separatorBuilder: (context, index) => const SizedBox(height: 10),
               itemBuilder: (context, index) {
-                // get each individual doc
                 DocumentSnapshot document = notesList[index];
                 String docID = document.id;
 
-                // get note from each doc
                 Map<String, dynamic> data =
                     document.data() as Map<String, dynamic>;
                 String noteText = data['medicineName'];
+                String condition = data['condition'];
+                int duration = data['duration'];
 
-                // display as a list tile for UI
-                return ListTile(
-                  leading: Icon(
-                    Icons.medication,
-                    color: Colors.red[700],
-                    size: 38,
-                  ),
-                  title: Text(
-                    "$noteText ",
-                    style: const TextStyle(
-                      fontSize: 21,
-                      fontWeight: FontWeight.w600,
-                      //color: Color.fromARGB(225, 158, 158, 158),
-                    ),
-                  ),
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // go to see more information
-                      IconButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => moreMData(docID,)));
-                        },
-                        icon: const Icon(
-                          Icons.medical_information,
-                          size: 28,
-                        ), //delete_forever
+                String repeat = data['repeat'];
+                String startDate = data['startDate'];
+                String endDate = calculateEndDate(duration, startDate);
+                DateTime startDateTime =
+                    DateFormat("M/d/yyyy").parse(startDate);
+                DateTime endDateTime = DateFormat("M/d/yyyy").parse(endDate);
+
+                int colorBack = data['color'];
+                Color itemColor;
+                if (colorBack == 0) {
+                  itemColor = Colors.lightBlueAccent.withOpacity(0.7);
+                } else if (colorBack == 1) {
+                  itemColor = const Color(0xFFD53A6E).withOpacity(0.7);
+                } else {
+                  itemColor = const Color(0xFFB0F067).withOpacity(0.7);
+                }
+
+                
+                if (startDateTime.isBefore(_selectedDate) &&
+                        endDateTime.isAfter(_selectedDate) ||
+                    startDate == DateFormat.yMd().format(_selectedDate) ||
+                    endDate == DateFormat.yMd().format(_selectedDate)) {
+                  if (repeat != 'Daily') {
+                    if (DateFormat.EEEE().format(_selectedDate) == repeat) {
+                      return Card(
+                        color: itemColor, // لون خلفية البطاقة
+                        elevation: 3, // قوة الظل
+                        shape: RoundedRectangleBorder(
+                          borderRadius:
+                              BorderRadius.circular(12), // حدة الزوايا
+                        ),
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: Icon(
+                              Icons.medication,
+                              color: Colors.red[800],
+                              size: 38,
+                            ),
+                          ),
+                          title: Text(
+                            "$noteText ",
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          subtitle: condition != "None"
+                              ? Text(" $condition")
+                              : const Text("  "),
+                          trailing: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              IconButton(
+                                onPressed: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => moreMData(docID)));
+                                },
+                                icon: const Icon(
+                                  Icons.medical_information,
+                                  size: 28,
+                                ),
+                              ),
+                              IconButton(
+                                onPressed: () =>
+                                    firestoreService.deletNote(docID),
+                                icon: const Icon(
+                                  Icons.task_alt,
+                                  size: 28,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    } else { return Container();}
+                  } else {
+                    return Card(
+                      color: itemColor, // لون خلفية البطاقة
+                      elevation: 3, // قوة الظل
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12), // حدة الزوايا
                       ),
-
-                      // delet button
-                      IconButton(
-                        onPressed: () => firestoreService.deletNote(docID),
-                        icon: const Icon(
-                          Icons.task_alt,
-                          size: 28,
+                      child: ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: Icon(
+                            Icons.medication,
+                            color: Colors.red[800],
+                            size: 38,
+                          ),
+                        ),
+                        title: Text(
+                          "$noteText ",
+                          style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        subtitle: condition != "None"
+                            ? Text(" $condition")
+                            : const Text("  "),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => moreMData(docID)));
+                              },
+                              icon: const Icon(
+                                Icons.medical_information,
+                                size: 28,
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () =>
+                                  firestoreService.deletNote(docID),
+                              icon: const Icon(
+                                Icons.task_alt,
+                                size: 28,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
-                    ],
-                  ),
-                );
+                    );
+                  }
+                }
+                 else{return Container();}
               },
             ),
           );
         }
         //if there is no data return nothing
         else {
-          return const Text(" No Medicine .. ");
+          return Container(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconTheme(
+                  data: IconThemeData(color: Colors.grey[400]),
+                  child: const Icon(
+                    Icons.library_books_sharp,
+                    size: 90,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  "You don't have any medications today.",
+                  style: TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[400],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          );
         }
       },
     );
+  }
+
+  String calculateEndDate(int duration, String startDate) {
+    DateTime startTime = DateFormat("M/d/yyyy").parse(startDate);
+    DateTime endDate = startTime.add(Duration(days: duration - 1));
+    String formattedDate = DateFormat('M/d/yyyy').format(endDate);
+    return formattedDate;
   }
 
   _addMedicineBar() {
@@ -229,7 +350,9 @@ class _homePageState extends State<homePage> {
           color: Colors.grey,
         ),
         onDateChange: (date) {
-          _selectedDate = date;
+          setState(() {
+            _selectedDate = date;
+          });
         },
       ),
     );

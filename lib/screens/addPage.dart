@@ -92,7 +92,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
   int _selectedRemind = 5;
   List<int> remindList = [5, 10, 15, 20];
   String _selectedRepeat = "None";
-  List<String> repeatList = ["None", "Daily", "Weekly", "Monthly"];
+  List<String> repeatList = ["Daily", "Sunday" ,"Monday" , "Tuesday" , "Wednesday", "Thursday" , "Friday" , "Saturday"];
 
   // colors
   int _selectedColor = 0;
@@ -414,6 +414,7 @@ class _AddMedicinePageState extends State<AddMedicinePage> {
                             _titleController.text,
                             _priceController.text,
                             _selectedAmountBox,
+                            _selectedDuration,
                             _selectedPackages,
                             _selectedDose,
                             DateFormat.yMd().format(_selectedDate),
