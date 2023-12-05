@@ -163,7 +163,7 @@ class _moreMDataState extends State<moreMData> {
                                         color: Colors.grey),
                                   )
                                 : Text(
-                                    "${moreDetalOfM[0]['price']}",
+                                    "${ calculatePrice(savePackagesNumberValue(), savePriceValue()) }",
                                     style: const TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.w500,
@@ -208,7 +208,7 @@ class _moreMDataState extends State<moreMData> {
                           ],
                         ),
                         const SizedBox(
-                          width: 80,
+                          width: 50,
                         ),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -437,6 +437,15 @@ class _moreMDataState extends State<moreMData> {
     return amountOfMedication;
   }
 
+// resd from database the (ePriceValue)
+  String savePriceValue() {
+    String repeatText = "";
+    repeatText = moreDetalOfM.isEmpty || moreDetalOfM == null
+        ? "Loading"
+        : moreDetalOfM[0]['price'];
+    return repeatText;
+  }
+
 // resd from database the (saveStartDateValue)
   String saveStartDateValue() {
     String startDate = "";
@@ -446,6 +455,16 @@ class _moreMDataState extends State<moreMData> {
         : moreDetalOfM[0]['startDate'];
 
     return startDate;
+  }
+
+// resd from database the (PackagesNumberValue)
+  int savePackagesNumberValue() {
+    int amountOfMedication = 0;
+
+    amountOfMedication = moreDetalOfM.isEmpty || moreDetalOfM == null
+        ? "Loading"
+        : moreDetalOfM[0]['packagesNumber'];
+    return amountOfMedication;
   }
 
   String checkDuration(int days) {
@@ -469,6 +488,19 @@ class _moreMDataState extends State<moreMData> {
       }
     }
   }
+
+
+String calculatePrice(int quantity, String number) {
+  int price = int.parse(number);
+  String priceOutPut;
+  if (quantity == 1) {
+    priceOutPut = '$price SR';
+    return priceOutPut;
+  } else {
+     priceOutPut = '${price * quantity} SR {all course}';
+    return priceOutPut;
+  } 
+}
 
   String calculateEndDate(int duration, String startDate) {
     DateTime startTime = DateFormat("M/d/yyyy").parse(startDate);

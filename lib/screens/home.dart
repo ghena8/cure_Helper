@@ -99,58 +99,71 @@ class _homePageState extends State<homePage> {
 
           // display as a list
           return Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
               itemCount: notesList.length,
+              separatorBuilder: (context, index) => const SizedBox(height: 10),
               itemBuilder: (context, index) {
-                // get each individual doc
                 DocumentSnapshot document = notesList[index];
                 String docID = document.id;
 
-                // get note from each doc
                 Map<String, dynamic> data =
                     document.data() as Map<String, dynamic>;
                 String noteText = data['medicineName'];
                 String condition = data['condition'];
-
-                // display as a list tile for UI
-                return ListTile(
-                  leading: Icon(
-                    Icons.medication,
-                    color: Colors.red[700],
-                    size: 38,
+                int colorBack = data['color'];
+                Color itemColor;
+                if (colorBack == 0) {
+                  itemColor = Colors.lightBlueAccent.withOpacity(0.7);
+                } else if (colorBack == 1) {
+                  itemColor = const Color(0xFFD53A6E).withOpacity(0.7);
+                } else {
+                  itemColor = const Color(0xFFB0F067).withOpacity(0.7);
+                }
+                return Card(
+                  color: itemColor, // لون خلفية البطاقة
+                  elevation: 3, // قوة الظل
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12), // حدة الزوايا
                   ),
-                  title: Text(
-                    "$noteText ",
-                    style: const TextStyle(
-                      fontSize: 21,
-                      fontWeight: FontWeight.w600,
-                      //color: Color.fromARGB(225, 158, 158, 158),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.medication,
+                        color: Colors.red[800],
+                        size: 38,
+                      ),
                     ),
-                  ),
-                  subtitle:condition != "None" ? Text(" $condition") : null,
-                  trailing: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      // go to see more information
-                      IconButton(
-                        onPressed: () {
-                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => moreMData(docID)));
-                        },
-                        icon: const Icon(
-                          Icons.medical_information,
-                          size: 28,
-                        ), //delete_forever
+                    title: Text(
+                      "$noteText ",
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
                       ),
-
-                      // delet button
-                      IconButton(
-                        onPressed: () => firestoreService.deletNote(docID),
-                        icon: const Icon(
-                          Icons.task_alt,
-                          size: 28,
+                    ),
+                    subtitle: condition != "None" ? Text(" $condition") : const Text("  "),
+                    trailing: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        IconButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => moreMData(docID)));
+                          },
+                          icon: const Icon(
+                            Icons.medical_information,
+                            size: 28,
+                          ),
                         ),
-                      ),
-                    ],
+                        IconButton(
+                          onPressed: () => firestoreService.deletNote(docID),
+                          icon: const Icon(
+                            Icons.task_alt,
+                            size: 28,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
