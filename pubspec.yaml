@@ -41,10 +41,16 @@ dependencies:
   get: ^4.6.5
   firebase_core: ^2.22.0
   firebase_auth: ^4.14.0
-
+  jiffy: ^6.2.1
   provider: ^6.1.1
   cloud_firestore: ^4.13.2
-
+  image_picker: ^1.0.4
+  http: ^0.13.0
+  shared_preferences: ^2.2.2
+  firebase_storage: ^11.5.3
+  firebase_messaging: ^14.7.6
+  awesome_dialog: ^3.1.0
+  dropdown_search: ^5.0.6
 
 dev_dependencies:
   flutter_test:
