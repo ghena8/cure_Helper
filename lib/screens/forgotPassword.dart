@@ -18,7 +18,10 @@ class _fogotPasswordState extends State<fogotPassword> {
   @override
   final email = TextEditingController();
 
-  void send() {}
+  void send() {
+
+
+  }
 
   @override
   Widget build(BuildContext context) {
