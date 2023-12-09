@@ -1,4 +1,5 @@
 //import 'package:CureHelper/component/navigationBar.dart';
+import 'package:CureHelper/component/mycheckIcon.dart';
 import 'package:CureHelper/screens/addPage.dart';
 import 'package:CureHelper/screens/moreMedicineData.dart';
 import 'package:CureHelper/services/firestore.dart';
@@ -111,6 +112,7 @@ class _homePageState extends State<homePage> {
                 String noteText = data['medicineName'];
                 String condition = data['condition'];
                 int duration = data['duration'];
+               
 
                 String repeat = data['repeat'];
                 String startDate = data['startDate'];
@@ -129,7 +131,6 @@ class _homePageState extends State<homePage> {
                   itemColor = const Color(0xFFB0F067).withOpacity(0.7);
                 }
 
-                
                 if (startDateTime.isBefore(_selectedDate) &&
                         endDateTime.isAfter(_selectedDate) ||
                     startDate == DateFormat.yMd().format(_selectedDate) ||
@@ -187,7 +188,9 @@ class _homePageState extends State<homePage> {
                           ),
                         ),
                       );
-                    } else { return Container();}
+                    } else {
+                      return Container();
+                    }
                   } else {
                     return Card(
                       color: itemColor, // لون خلفية البطاقة
@@ -227,21 +230,15 @@ class _homePageState extends State<homePage> {
                                 size: 28,
                               ),
                             ),
-                            IconButton(
-                              onPressed: () =>
-                                  firestoreService.deletNote(docID),
-                              icon: const Icon(
-                                Icons.task_alt,
-                                size: 28,
-                              ),
-                            ),
+                             MyIconButton(),
                           ],
                         ),
                       ),
                     );
                   }
+                } else {
+                  return Container();
                 }
-                 else{return Container();}
               },
             ),
           );
