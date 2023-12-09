@@ -1,32 +1,36 @@
 //import 'package:CureHelper/db/db_helper.dart';
 import 'package:CureHelper/firebase_options.dart';
+import 'package:CureHelper/providers/user_provider.dart';
 import 'package:CureHelper/screens/addPage.dart';
 import 'package:CureHelper/screens/forgotPassword.dart';
 import 'package:CureHelper/screens/historyPage.dart';
 import 'package:CureHelper/screens/home.dart';
-import 'package:CureHelper/screens/moreMedicineData.dart';
-import 'package:CureHelper/screens/searchPage.dart';
 import 'package:CureHelper/screens/morePage.dart';
+import 'package:CureHelper/screens/searchPage.dart';
 import 'package:CureHelper/theme/theme_provider.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'screens/login_page.dart';
-import 'screens/welcome.dart';
-import 'screens/sign_up.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-Future <void> main() async{
-   WidgetsFlutterBinding.ensureInitialized();
-   await Firebase.initializeApp(
+import 'screens/login_page.dart';
+import 'screens/sign_up.dart';
+import 'screens/welcome.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
-   );
-  // await DBHelper.initDb();
+  );
 
   runApp(
-ChangeNotifierProvider(create: (context) => ThemeProvider(),
-child: const MyApp(),
-  ),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => UserProvider()),
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 
@@ -39,24 +43,30 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
+  void initState() {
+    super.initState();
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
+      Provider.of<UserProvider>(context, listen: false).setUser(user);
+    });
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    User? user = Provider.of<UserProvider>(context).user;
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: const welcome(),
+      home: user == null ? const welcome() : const homePage(),
       theme: Provider.of<ThemeProvider>(context).themeData,
-      initialRoute: "welcome",
       routes: {
         "welcome": (BuildContext context) => const welcome(),
         "login": (context) => const loginPage(),
         "signup": (context) => const signUp(),
         "send email": (context) => const fogotPassword(),
-        "home" :(context) => const homePage(),
-        "add medicine " :(context) => const AddMedicinePage(),
-        "more" :(context) => const morePage(),
-        "search" :(context) => const searchPage(),
-        "history" :(context) => const HistoryPage(),
-       // "moreMData"  :(context) => const moreMData(),
+        "home": (context) => const homePage(),
+        "add medicine ": (context) => const AddMedicinePage(),
+        "more": (context) => const morePage(),
+        "search": (context) => const searchPage(),
+        "history": (context) => const HistoryPage(),
       },
     );
   }

@@ -1,9 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:CureHelper/component/cure_button.dart';
 import 'package:CureHelper/component/cure_text_field.dart';
-import 'package:CureHelper/screens/sign_up.dart';
 import 'package:flutter/material.dart';
-
 
 class fogotPassword extends StatefulWidget {
   static const String routename = 'send email';
@@ -16,18 +13,15 @@ class fogotPassword extends StatefulWidget {
 
 class _fogotPasswordState extends State<fogotPassword> {
   @override
-  final email = TextEditingController();
+  final email = TextEditingController(text: "");
 
-  void send() {
-
-
-  }
+  void send() {}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration:  BoxDecoration(
+        decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary,
         ),
         child: Column(
@@ -36,7 +30,7 @@ class _fogotPasswordState extends State<fogotPassword> {
               SafeArea(
                 child: Padding(
                   padding:
-                  const EdgeInsets.symmetric(vertical: 8.5, horizontal: 9),
+                      const EdgeInsets.symmetric(vertical: 8.5, horizontal: 9),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -78,63 +72,52 @@ class _fogotPasswordState extends State<fogotPassword> {
                 ),
               ),
               Container(
-        height: MediaQuery.of(context).size.height *
-            0.80, // 80% of screen height
-        width: double.infinity,
+                height: MediaQuery.of(context).size.height *
+                    0.80, // 80% of screen height
+                width: double.infinity,
 
-            alignment: Alignment.center,
+                alignment: Alignment.center,
 
-            decoration:  BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15), topRight: Radius.circular(25)),
-            ),
-            child: Padding(
-
-              padding:  EdgeInsets.symmetric(horizontal: 25.0),
-
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-
-
-                      SizedBox(child:
-                      Text("Enter your registed email and we will send you a password reset link ",
-                       textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onBackground,
-                        fontSize:20,
-                        fontWeight: FontWeight.w500
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.background,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(25)),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(
+                        child: Text(
+                          "Enter your registed email and we will send you a password reset link ",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Theme.of(context).colorScheme.onBackground,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w500),
+                        ),
                       ),
+                      SizedBox(height: 60),
+                      cure_text_field(
+                        obsecure: false,
+                        controler: email,
+                        hintText: "email",
+                        ic: Icons.email,
+                      ),
+                      SizedBox(height: 20),
+                      CureButton(
+                        onTab: send,
+                        text: "Send",
+                        //   variants: "dark",
+                      ),
+                    ],
+                  ),
+                ),
               ),
-
-                  ),
-
-
-                    SizedBox(height: 60),
-                  cure_text_field(
-                    obsecure: false,
-                    controler: email,
-                    hintText: "email",
-                    ic: Icons.email,
-                  ),
-                  SizedBox(height: 20),
-
-                  CureButton(
-                    onTab: send,
-                    text: "Send",
-                 //   variants: "dark",
-                  ),
-
-                ],
-
-            ),
-            ),
-
-
-          ),
-        ]),
+            ]),
       ),
     );
   }

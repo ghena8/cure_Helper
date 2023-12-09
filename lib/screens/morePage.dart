@@ -1,12 +1,12 @@
 import 'package:CureHelper/screens/historyPage.dart';
+import 'package:CureHelper/screens/home.dart';
 import 'package:CureHelper/screens/searchPage.dart';
+import 'package:CureHelper/screens/welcome.dart';
 import 'package:CureHelper/theme/theme_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:CureHelper/screens/home.dart';
 import 'package:provider/provider.dart';
-import 'package:CureHelper/screens/welcome.dart';
-import '../component/cure_button.dart';
 
 class morePage extends StatefulWidget {
   static const String routename = 'more';
@@ -26,7 +26,7 @@ class _MorePageState extends State<morePage> {
       bottomNavigationBar: myNavigationBar(),
       //appBar: _appBar(),
       body: Container(
-        decoration:  BoxDecoration(
+        decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary,
         ),
         child: Column(
@@ -75,9 +75,8 @@ class _MorePageState extends State<morePage> {
               height: MediaQuery.of(context).size.height *
                   0.70, // 70% of screen height
               width: double.infinity,
-              decoration:BoxDecoration(
+              decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.background,
-
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15),
                     topRight: Radius.circular(25)),
@@ -119,16 +118,24 @@ class _MorePageState extends State<morePage> {
                                   },
                                 ),
                                 Consumer<ThemeProvider>(
-                                  builder: (context, themeProvider, child) => Padding(
-                                    padding: const EdgeInsets.only(left: 10), // Adjust the value here as needed
+                                  builder: (context, themeProvider, child) =>
+                                      Padding(
+                                    padding: const EdgeInsets.only(
+                                        left:
+                                            10), // Adjust the value here as needed
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         IconButton(
                                           icon: Icon(
-                                            themeProvider.isDarkMode ? Icons.nightlight_round : Icons.wb_sunny_rounded,
+                                            themeProvider.isDarkMode
+                                                ? Icons.nightlight_round
+                                                : Icons.wb_sunny_rounded,
                                             size: 40,
-                                            color: themeProvider.isDarkMode ? Colors.yellow : Colors.orange,
+                                            color: themeProvider.isDarkMode
+                                                ? Colors.yellow
+                                                : Colors.orange,
                                           ),
                                           onPressed: () {
                                             themeProvider.toggleTheme();
@@ -141,12 +148,10 @@ class _MorePageState extends State<morePage> {
                               ],
                             ),
                           ),
-
                         ],
                       ),
 
-
-                     /* CureButton(
+                      /* CureButton(
                         onTab: () {
                           Provider.of<ThemeProvider> (context,listen:false).toggleTheme();// go to home page
                         },
@@ -156,8 +161,9 @@ class _MorePageState extends State<morePage> {
                         padding: const EdgeInsets.only(left: 25, bottom: 25),
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.of(context).pushNamed(welcome.routename);
-                            // go to welcome screen
+                            FirebaseAuth.instance.signOut();
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                                welcome.routename, (route) => false);
                           },
                           child: ListTile(
                             leading: Icon(
@@ -198,42 +204,44 @@ class _MorePageState extends State<morePage> {
     return Container(
       color: Theme.of(context).colorScheme.background,
       child: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
+        padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 20),
         child: GNav(
           backgroundColor: Theme.of(context).colorScheme.background,
           color: Theme.of(context).colorScheme.onBackground, // of text
           activeColor: Theme.of(context).colorScheme.onBackground,
-          tabBackgroundColor:Theme.of(context).colorScheme.primary,
+          tabBackgroundColor: Theme.of(context).colorScheme.primary,
 
-        gap: 8, //Space between the icon and the name
+          gap: 8, //Space between the icon and the name
           padding: const EdgeInsets.all(16),
           onTabChange: _navigateBottomBar, // Change under pressure
           selectedIndex: _selectedIndex,
           tabs: [
             GButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(homePage.routename);
+                Navigator.of(context).pushReplacementNamed(homePage.routename);
               },
               icon: Icons.home,
               text: 'Home',
             ),
             GButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(searchPage.routename);
+                Navigator.of(context)
+                    .pushReplacementNamed(searchPage.routename);
               },
               icon: Icons.search,
               text: 'Search',
             ),
             GButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(HistoryPage.routename);
+                Navigator.of(context)
+                    .pushReplacementNamed(HistoryPage.routename);
               },
               icon: Icons.auto_stories, // or collections_bookmark or menu_book
               text: 'History',
             ),
             GButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(morePage.routename);
+                Navigator.of(context).pushReplacementNamed(morePage.routename);
               },
               icon: Icons.more_horiz_outlined,
               text: 'more',
