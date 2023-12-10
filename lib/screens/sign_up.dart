@@ -1,6 +1,10 @@
+import 'package:CureHelper/component/alert.dart';
 import 'package:CureHelper/component/cure_button.dart';
 import 'package:CureHelper/component/cure_text_field.dart';
 import 'package:CureHelper/screens/login_page.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class signUp extends StatefulWidget {
@@ -13,32 +17,82 @@ class signUp extends StatefulWidget {
 }
 
 class _signUpState extends State<signUp> {
-  final username = TextEditingController();
+  final username = TextEditingController(text: "");
 
-  final password = TextEditingController();
+  final password = TextEditingController(text: "");
 
-  final email = TextEditingController();
-  void signUpUser() {}
+  final email = TextEditingController(text: "");
+  signUp() async {
+    try {
+      showLoading(context);
+      /**
+       *  TODOs 
+       * - CHECK IF USER EXSITIED
+       * if exsits, throw an error
+       * else continue signup
+       *  */
+      UserCredential userCredential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email.text,
+        password: password.text,
+      );
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        Navigator.of(context).pop();
+        AwesomeDialog(
+          context: context,
+          title: "Error",
+          body: Text("Password is too weak"),
+        ).show();
+      } else if (e.code == 'email-already-in-use') {
+        Navigator.of(context).pop();
+        AwesomeDialog(
+          context: context,
+          title: "Error",
+          body: Text("The account already exists for that email"),
+        ).show();
+        return null;
+      }
+    } catch (e) {
+      print(e);
+      return null;
+    }
+  }
+
+  void signUpUser() async {
+    // button
+    /**
+     * Todos
+     * - check if user is in the collection
+     * - if true, update the collection
+     * else add new user to the collection
+     */
+    UserCredential response = await signUp();
+    print("===================");
+    await FirebaseFirestore.instance
+        .collection("users")
+        .add({"username": username.text, "email": response.user?.email});
+    Navigator.of(context).pushReplacementNamed(loginPage.routename);
+    print("===================");
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration:  BoxDecoration(
-          color:Theme.of(context).colorScheme.primary,
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary,
         ),
         child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
           Container(
             height: MediaQuery.of(context).size.height *
                 0.7, // 70% of screen height
             width: double.infinity,
-            decoration:  BoxDecoration(
+            decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.background,
               borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15), topRight: Radius.circular(25)
-              ),
-
-
+                  topLeft: Radius.circular(15), topRight: Radius.circular(25)),
             ),
             child: Padding(
               padding: const EdgeInsets.all(15.0),
@@ -50,7 +104,6 @@ class _signUpState extends State<signUp> {
 
                   cure_text_field(
                     obsecure: false,
-
                     controler: username,
                     hintText: "username",
                     ic: Icons.person,
@@ -66,17 +119,14 @@ class _signUpState extends State<signUp> {
                   // an email field
                   cure_text_field(
                     obsecure: false,
-
                     controler: email,
                     hintText: "email",
                     ic: Icons.email,
                   ),
-
-
                   CureButton(
                     onTab: signUpUser,
                     text: "sign up",
-                   // variants: "dark",
+                    // variants: "dark",
                   ),
 
                   Row(
@@ -90,7 +140,7 @@ class _signUpState extends State<signUp> {
                         onTap: () {
                           Navigator.of(context).pushNamed(loginPage.routename);
                         },
-                        child:  Text(
+                        child: Text(
                           "Log in here",
                           style: TextStyle(
                               color: Theme.of(context).colorScheme.onBackground,

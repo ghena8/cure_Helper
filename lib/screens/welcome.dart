@@ -53,7 +53,8 @@ class welcome extends StatelessWidget {
                 children: [
                   start_button(
                     onTab: () {
-                      Navigator.of(context).pushNamed(loginPage.routename);
+                      Navigator.of(context)
+                          .pushReplacementNamed(loginPage.routename);
                     },
                     text: "Get started",
                   ),
