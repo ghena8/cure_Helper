@@ -58,92 +58,99 @@ class _loginPageState extends State<loginPage> {
 
   @override
   Widget build(BuildContext context) {
-    // double sizeW= MediaQuery.of(context).size.width; if I wanted streched dimensions
-    // double sizeH = MediaQuery.of(context).size.height;if I wanted streched dimensions
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.primary,
         ),
         child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-          Container(
-            height: MediaQuery.of(context).size.height *
-                0.75, // 75% of screen height
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15), topRight: Radius.circular(25)),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(height: 40),
-                  cure_text_field(
-                    obsecure: false,
-                    controler: email,
-                    hintText: "email",
-                    ic: Icons.email,
-                  ),
-                  cure_text_field(
-                    controler: password,
-                    hintText: "password",
-                    obsecure: true,
-                    ic: Icons.lock,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+          Expanded(flex: 1, child: Container()),
+          Expanded(
+            flex: 4,
+            child: SingleChildScrollView(
+              child: Container(
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height * 0.8,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.background,
+                  borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(25)),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context)
-                              .pushNamed(fogotPassword.routename);
-                        },
-                        child: Text(
-                          "forgot password?",
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.onBackground,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w400,
+                      const SizedBox(height: 40),
+                      cure_text_field(
+                        obsecure: false,
+                        controler: email,
+                        hintText: "email",
+                        ic: Icons.email,
+                      ),
+                      cure_text_field(
+                        controler: password,
+                        hintText: "password",
+                        obsecure: true,
+                        ic: Icons.lock,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context)
+                                  .pushNamed(fogotPassword.routename);
+                            },
+                            child: Text(
+                              "forgot password?",
+                              style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onBackground,
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                  CureButton(
-                    onTab: logInUser,
-                    // go to home page
+                      CureButton(
+                        onTab: logInUser,
+                        // go to home page
 
-                    text: "Log In",
-                    // variants: "dark",
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("not a member? "),
-                      const SizedBox(
-                        width: 4,
+                        text: "Log In",
+                        // variants: "dark",
                       ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(signUp.routename);
-                        },
-                        child: Text(
-                          "Register now",
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.onBackground,
-                              fontWeight: FontWeight.w500),
-                        ),
-                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const Text("not a member? "),
+                          const SizedBox(
+                            width: 4,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(signUp.routename);
+                            },
+                            child: Text(
+                              "Register now",
+                              style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onBackground,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
-                  )
-                ],
+                  ),
+                ),
               ),
             ),
-          ),
+          )
         ]),
       ),
     );
