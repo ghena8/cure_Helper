@@ -111,7 +111,7 @@ class _searchPageState extends State<searchPage> {
       ],
       'Malaz': [
         'Al-Ruwaida Pharmacy : Tahlia Street - Bugshan Hospital',
-        'Community pharmacy :Al Naseem Street ',
+        'Community pharmacy : Al Naseem Street ',
         'Al-Ruwaida Pharmacy : Thirty Street ',
         'Al-Ruwaida Pharmacy : Stalagmite Street (Jack)',
         'United Pharmacy : Palestine Street, opposite Fakeeh Hospital ',
@@ -129,7 +129,7 @@ class _searchPageState extends State<searchPage> {
       ],
       'Tuwaiq': [
         'Al-Ruwaida Pharmacy : Main Street ',
-        'Community pharmacy :Al Naseem Street ',
+        'Community pharmacy : Al Naseem Street ',
         'United Pharmacy : Abdullah Al Khayyat Street',
         'Nahdi Pharmacy : Al-Azizia Main Street'
       ],
