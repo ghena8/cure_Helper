@@ -1,5 +1,8 @@
+//import 'dart:js';
+
 import 'package:CureHelper/screens/historyPage.dart';
 import 'package:CureHelper/screens/home.dart';
+import 'package:CureHelper/screens/profile_page.dart';
 import 'package:CureHelper/screens/searchPage.dart';
 import 'package:CureHelper/screens/welcome.dart';
 import 'package:CureHelper/theme/theme_provider.dart';
@@ -7,14 +10,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
-
+import 'package:CureHelper/screens/profile_page.dart';
 class morePage extends StatefulWidget {
   static const String routename = 'more';
-
-  const morePage({super.key});
+  const morePage({Key? key}) : super(key: key);
 
   @override
   _MorePageState createState() => _MorePageState();
+
 }
 
 class _MorePageState extends State<morePage> {
@@ -27,7 +30,10 @@ class _MorePageState extends State<morePage> {
       //appBar: _appBar(),
       body: Container(
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
+          color: Theme
+              .of(context)
+              .colorScheme
+              .primary,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -35,7 +41,7 @@ class _MorePageState extends State<morePage> {
             SafeArea(
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(vertical: 8.5, horizontal: 9),
+                const EdgeInsets.symmetric(vertical: 8.5, horizontal: 9),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -72,11 +78,17 @@ class _MorePageState extends State<morePage> {
               ),
             ),
             Container(
-              height: MediaQuery.of(context).size.height *
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height *
                   0.70, // 70% of screen height
               width: double.infinity,
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.background,
+                color: Theme
+                    .of(context)
+                    .colorScheme
+                    .background,
                 borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(15),
                     topRight: Radius.circular(25)),
@@ -114,36 +126,41 @@ class _MorePageState extends State<morePage> {
                                     ),
                                   ),
                                   onTap: () {
-                                    // go to profile screen
+                                    Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) => ProfilePage(),
+                                    ));
                                   },
+                                  // go to profile screen
+
                                 ),
                                 Consumer<ThemeProvider>(
                                   builder: (context, themeProvider, child) =>
                                       Padding(
-                                    padding: const EdgeInsets.only(
-                                        left:
-                                            10), // Adjust the value here as needed
-                                    child: Row(
-                                      mainAxisAlignment:
+                                        padding: const EdgeInsets.only(
+                                            left:
+                                            10),
+                                        // Adjust the value here as needed
+                                        child: Row(
+                                          mainAxisAlignment:
                                           MainAxisAlignment.start,
-                                      children: [
-                                        IconButton(
-                                          icon: Icon(
-                                            themeProvider.isDarkMode
-                                                ? Icons.nightlight_round
-                                                : Icons.wb_sunny_rounded,
-                                            size: 40,
-                                            color: themeProvider.isDarkMode
-                                                ? Colors.yellow
-                                                : Colors.orange,
-                                          ),
-                                          onPressed: () {
-                                            themeProvider.toggleTheme();
-                                          },
+                                          children: [
+                                            IconButton(
+                                              icon: Icon(
+                                                themeProvider.isDarkMode
+                                                    ? Icons.nightlight_round
+                                                    : Icons.wb_sunny_rounded,
+                                                size: 40,
+                                                color: themeProvider.isDarkMode
+                                                    ? Colors.yellow
+                                                    : Colors.orange,
+                                              ),
+                                              onPressed: () {
+                                                themeProvider.toggleTheme();
+                                              },
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ),
+                                      ),
                                 ),
                               ],
                             ),
@@ -192,6 +209,7 @@ class _MorePageState extends State<morePage> {
       ),
     );
   }
+
 
   myNavigationBar() {
     int _selectedIndex = 3;
@@ -250,5 +268,6 @@ class _MorePageState extends State<morePage> {
         ),
       ),
     );
+
   }
 }
