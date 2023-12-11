@@ -1,9 +1,9 @@
 import 'package:CureHelper/component/cure_button.dart';
 import 'package:CureHelper/component/cure_text_field.dart';
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
 class fogotPassword extends StatefulWidget {
   static const String routename = 'send email';
 
@@ -17,9 +17,8 @@ class _fogotPasswordState extends State<fogotPassword> {
   @override
   final email = TextEditingController(text: "");
 
-  void  send() async{
-    if (email.text == ""){
-
+  void send() async {
+    if (email.text == "") {
       AwesomeDialog(
         context: context,
         dialogType: DialogType.error,
@@ -27,7 +26,7 @@ class _fogotPasswordState extends State<fogotPassword> {
         title: 'Error',
         desc: "please write your email first",
       ).show();
-return;
+      return;
     }
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(email: email.text);
@@ -38,7 +37,7 @@ return;
         title: 'Done',
         desc: "reset email link have been sent",
       ).show();
-    }catch(e){
+    } catch (e) {
       AwesomeDialog(
         context: context,
         dialogType: DialogType.error,
@@ -47,16 +46,16 @@ return;
         desc: "incorrect email, try again",
       ).show();
     }
-
-  }// end send
+  } // end send
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
-        ),
+        body: Container(
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary,
+      ),
+      child: SingleChildScrollView(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -152,6 +151,6 @@ return;
               ),
             ]),
       ),
-    );
+    ));
   }
 }

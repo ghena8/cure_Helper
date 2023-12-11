@@ -86,74 +86,82 @@ class _signUpState extends State<signUp> {
           color: Theme.of(context).colorScheme.primary,
         ),
         child: Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-          Container(
-            height: MediaQuery.of(context).size.height *
-                0.7, // 70% of screen height
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.background,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(15), topRight: Radius.circular(25)),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(15.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const SizedBox(height: 40),
-
-                  cure_text_field(
-                    obsecure: false,
-                    controler: username,
-                    hintText: "username",
-                    ic: Icons.person,
+          Expanded(flex: 1, child: Container()),
+          Expanded(
+              flex: 4,
+              child: SingleChildScrollView(
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.background,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15),
+                        topRight: Radius.circular(25)),
                   ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        const SizedBox(height: 40),
 
-                  cure_text_field(
-                    controler: password,
-                    hintText: "password",
-                    obsecure: true,
-                    ic: Icons.lock,
-                  ),
-
-                  // an email field
-                  cure_text_field(
-                    obsecure: false,
-                    controler: email,
-                    hintText: "email",
-                    ic: Icons.email,
-                  ),
-                  CureButton(
-                    onTab: signUpUser,
-                    text: "sign up",
-                    // variants: "dark",
-                  ),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text("do you have an account? "),
-                      const SizedBox(
-                        width: 4,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.of(context).pushNamed(loginPage.routename);
-                        },
-                        child: Text(
-                          "Log in here",
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.onBackground,
-                              fontWeight: FontWeight.w500),
+                        cure_text_field(
+                          obsecure: false,
+                          controler: username,
+                          hintText: "username",
+                          ic: Icons.person,
                         ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
+
+                        cure_text_field(
+                          controler: password,
+                          hintText: "password",
+                          obsecure: true,
+                          ic: Icons.lock,
+                        ),
+
+                        // an email field
+                        cure_text_field(
+                          obsecure: false,
+                          controler: email,
+                          hintText: "email",
+                          ic: Icons.email,
+                        ),
+                        CureButton(
+                          onTab: signUpUser,
+                          text: "sign up",
+                          // variants: "dark",
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("do you have an account? "),
+                            const SizedBox(
+                              width: 4,
+                            ),
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(loginPage.routename);
+                              },
+                              child: Text(
+                                "Log in here",
+                                style: TextStyle(
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .onBackground,
+                                    fontWeight: FontWeight.w500),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              )),
         ]),
       ),
     );
