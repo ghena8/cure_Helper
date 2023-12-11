@@ -22,15 +22,11 @@ class _signUpState extends State<signUp> {
   final password = TextEditingController(text: "");
 
   final email = TextEditingController(text: "");
+
   signUp() async {
     try {
       showLoading(context);
-      /**
-       *  TODOs 
-       * - CHECK IF USER EXSITIED
-       * if exsits, throw an error
-       * else continue signup
-       *  */
+
       UserCredential userCredential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email.text,
@@ -46,6 +42,11 @@ class _signUpState extends State<signUp> {
           body: Text("Password is too weak"),
         ).show();
       } else if (e.code == 'email-already-in-use') {
+        /**
+         * - CHECK IF USER EXSITIED
+         * if exsits, throw an error
+         * else continue signup
+         *  */
         Navigator.of(context).pop();
         AwesomeDialog(
           context: context,
@@ -63,7 +64,7 @@ class _signUpState extends State<signUp> {
   void signUpUser() async {
     // button
     /**
-     * Todos
+
      * - check if user is in the collection
      * - if true, update the collection
      * else add new user to the collection
