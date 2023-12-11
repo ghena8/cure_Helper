@@ -115,6 +115,33 @@ class _HistoryPageState extends State<HistoryPage> {
         // if we have data, get all the docs
         if (snapshot.hasData) {
           List notesList = snapshot.data!.docs;
+            if (notesList.isEmpty){ 
+              return Container(
+            padding: const EdgeInsets.all(40),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconTheme(
+                  data: IconThemeData(color: Colors.grey[400]),
+                  child: const Icon(
+                    Icons.library_books_sharp,
+                    size: 90,
+                  ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  "You don't have any medications ",
+                  style: TextStyle(
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey[400],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          );
+          }
           // display as a list
           return Expanded(
             child: ListView.builder(
