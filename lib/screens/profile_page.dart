@@ -1,15 +1,51 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:CureHelper/screens/morePage.dart';
+import '../component/text_box.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
+
 }
 
 class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
+    //user
+    final currentUser = FirebaseAuth.instance.currentUser;
+//edit field
+    Future<void> editField(String field) async {
+
+
+      String newValue = "";
+      await showDialog(
+      context: context,
+
+      builder: (context) => AlertDialog(
+      backgroundColor:Colors.grey[900],
+      title: Text(
+      "Edit $field",
+      style: const TextStyle(color:Colors.white),
+      ), // Text
+      content: TextField(
+      autofocus: true,
+
+      decoration: InputDecoration(
+      hintText: "Enter new $field",
+      hintStyle: TextStyle(color: Colors.grey),
+      ),
+        onChanged: (value){
+        newValue =value;
+        }
+
+      ),  // InputDecoration
+      ), // TextField
+      ); // AlertDialog
+    }
     return Scaffold(
 
     body: Container(
@@ -46,7 +82,7 @@ class _ProfilePageState extends State<ProfilePage> {
     width: 20,
     ),
     Text(
-    " P R P F I L E",
+    " P R P O I L E",
     style: TextStyle(
     fontSize: 30,
     fontWeight: FontWeight.w700,
@@ -75,9 +111,63 @@ class _ProfilePageState extends State<ProfilePage> {
     topRight: Radius.circular(25)),
     ),
 
+         child: ListView(
+            children: [
+              SizedBox(height: 50),
+
+
+              Icon(
+                Icons.person,
+                color: Colors.grey[400],
+                size: 72,
+              ),
+              SizedBox(height: 10),
+              Text(
+                currentUser?.email ?? 'N/A',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+
+
+              SizedBox(height: 50),
+              //user details
+              Padding(
+                  padding:EdgeInsets.only(left:25.0),
+                  child: Text(
+                    "My Details",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w300,
+
+                      fontSize: 15,
+
+                    ),
+                  )
+              ),
+              //username
+              MyTextBox(
+                text:'Ghena Alghalayeeni' ,
+                sectionName: 'username',
+                onPressed:() => editField('username'),
+              ),
+              SizedBox(height:30 ),
+              //bio
+              MyTextBox(
+                text:'empty bio' ,
+                sectionName: 'bio',
+                onPressed:() => editField('bio'),
+              ),
+            ],
+          ),
+
+
     ),
-  ]),
+
+    ],),
     ),
     );
+
   }
 }

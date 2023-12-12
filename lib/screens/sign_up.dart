@@ -73,7 +73,9 @@ class _signUpState extends State<signUp> {
     print("===================");
     await FirebaseFirestore.instance
         .collection("users")
-        .add({"username": username.text, "email": response.user?.email});
+        .add({"username": username.text,
+      "email": response.user?.email,
+      "bio":"Empty bio.."});
     Navigator.of(context).pushReplacementNamed(loginPage.routename);
     print("===================");
   }
@@ -95,6 +97,7 @@ class _signUpState extends State<signUp> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.background,
+
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(15),
                         topRight: Radius.circular(25)),
