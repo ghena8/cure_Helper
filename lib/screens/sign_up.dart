@@ -71,11 +71,14 @@ class _signUpState extends State<signUp> {
      */
     UserCredential response = await signUp();
     print("===================");
-    await FirebaseFirestore.instance
-        .collection("users")
-        .add({"username": username.text,
+    // get user auth id (uid)
+    String uid = response.user!.uid;
+    await FirebaseFirestore.instance.collection("users").doc(uid).set({
+      // upsert (update or insert) user with uid
+      "username": username.text,
       "email": response.user?.email,
-      "bio":"Empty bio.."});
+      "bio": "Empty bio..",
+    });
     Navigator.of(context).pushReplacementNamed(loginPage.routename);
     print("===================");
   }
@@ -97,7 +100,6 @@ class _signUpState extends State<signUp> {
                   width: double.infinity,
                   decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.background,
-
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(15),
                         topRight: Radius.circular(25)),

@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FirestoreService {
   // get collection of note (Medicine)
@@ -20,13 +21,14 @@ class FirestoreService {
       int remind,
       String repeat) {
     return notes.add({
+      'userId': FirebaseAuth.instance.currentUser!.uid,
       //'note': note,
       'timestamp': Timestamp.now(),
       'medicineName': medicineName,
       'price': price,
       //'isCompleted': 0,
       'amountOfMedication': amountOfMedication,
-      'duration' :duration,
+      'duration': duration,
       'packagesNumber': packagesNumber,
       'medicationDose': medicationDose,
       'startDate': startDate,
@@ -41,8 +43,12 @@ class FirestoreService {
   //READ : get Medicine from database
   Stream<QuerySnapshot> getNoteStream() {
     // the new one will be in the top
-    final notesStream =
-        notes.orderBy('timestamp', descending: true).snapshots();
+    // user id
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+    final notesStream = notes
+        .where('userId', isEqualTo: userId)
+        .orderBy('timestamp', descending: true)
+        .snapshots();
     return notesStream;
   }
 
